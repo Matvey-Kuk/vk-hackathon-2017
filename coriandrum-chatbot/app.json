@@ -1,0 +1,5 @@
+{
+  "name": "chatbot for news reporting",
+  "repository": "https://github.com/Matvey-Kuk/vk-hackathon-2017",
+  "image": "heroku/nodejs"
+}
