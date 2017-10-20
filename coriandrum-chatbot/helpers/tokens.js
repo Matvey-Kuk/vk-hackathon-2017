@@ -9,7 +9,7 @@ var get = function (callback) {
     }
   }, function (error, response, body) {
     if (!error) {
-      console.log("TOKENS RESPONSE", response);
+      console.log("TOKENS BODY", body);
       callback();
     } else {
       console.log("TOKENS ERROR", error);
