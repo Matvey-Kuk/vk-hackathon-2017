@@ -31,14 +31,8 @@ app.post('/', function(request, response){
         break;
       default:
         console.log('default');
-        reply = 'default_!)))';
+        reply = 'default';
     }
-
-
-    // app.post(MESSAGES_SEND_URL, {
-    //   'access_token': ACCESS_TOKEN,
-    //   'message': reply
-    // });
 
     makeRequest({
       url: MESSAGES_SEND_URL,
