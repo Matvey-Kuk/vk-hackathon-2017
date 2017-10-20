@@ -5,9 +5,9 @@ var makeRequest = require('request');
 
 var MESSAGES_SEND_URL = 'https://api.vk.com/method/messages.send';
 
-var getToken = require('./constants/tokens').get;
+var getToken = require('./helpers/tokens').get;
 
-console.log(getToken);
+console.log("GETTOKEN", getToken);
 
 var setApp = function (tokens) {
   app.set('port', (process.env.PORT || 5000));
