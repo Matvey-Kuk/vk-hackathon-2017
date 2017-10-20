@@ -41,7 +41,7 @@ var setApp = function (tokens) {
         method: 'POST',
         form: {
           'message': reply,
-          'access_token': constants.ACCESS,
+          'access_token': tokens.ACCESS,
           'user_id': userId
         }
       }, function (error, response, body) {
