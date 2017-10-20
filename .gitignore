@@ -2,3 +2,4 @@
 /coriandrum/db.sqlite3
 *.pyc
 *.__pycache__
+*node_modules
