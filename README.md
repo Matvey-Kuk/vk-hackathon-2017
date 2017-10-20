@@ -1,0 +1,1 @@
+Heroku: `git subtree push --prefix coriandrum-chatbot heroku master`
