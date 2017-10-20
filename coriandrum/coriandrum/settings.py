@@ -25,7 +25,7 @@ SECRET_KEY = 'tbx$x72zdqssl=sf1cqxq^+ul98@h$8*0f2d3$c%(th8nl9z%c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 AUTH_USER_MODEL = 'coriandrum.CoriandrumUser'

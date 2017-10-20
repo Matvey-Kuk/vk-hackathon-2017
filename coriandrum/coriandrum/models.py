@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CoriandrumUser(AbstractUser):
-    vk_user_id = models.IntegerField(unique=True)
+    vk_user_id = models.IntegerField(unique=True, blank=True, null=True)
 
     @property
     def achievements(self):
