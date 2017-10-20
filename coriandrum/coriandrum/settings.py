@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'coriandrum',
     'apps.public_rating',
-    'apps.api'
+    'apps.api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

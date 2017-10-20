@@ -1,5 +1,20 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
 class CoriandrumUser(AbstractUser):
-    pass
+    vk_user_id = models.IntegerField(unique=True)
+
+    @property
+    def achievements(self):
+        return Achievement.objects.all()
+
+
+class Achievement(models.Model):
+    name = models.TextField()
+    image = models.ImageField()
+
+
+class Post(models.Model):
+    author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
+    text = models.TextField()
