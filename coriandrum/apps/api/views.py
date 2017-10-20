@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from coriandrum.models import CoriandrumUser
+
+from .serializers import CoriandrumUserSerializer
+
+
+class CoriandrumUserViewSet(viewsets.ModelViewSet):
+    queryset = CoriandrumUser.objects.all()
+    serializer_class = CoriandrumUserSerializer
