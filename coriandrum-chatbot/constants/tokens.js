@@ -2,7 +2,7 @@ var makeRequest = require('request');
 
 var get = function (callback) {
   makeRequest({
-    url: 'api.heroku.com/apps/coriandrum-chatbot/config-vars',
+    url: 'https://api.heroku.com/apps/coriandrum-chatbot/config-vars',
     method: 'POST'
   }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
