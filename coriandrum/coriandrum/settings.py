@@ -25,7 +25,7 @@ SECRET_KEY = 'tbx$x72zdqssl=sf1cqxq^+ul98@h$8*0f2d3$c%(th8nl9z%c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 AUTH_USER_MODEL = 'coriandrum.CoriandrumUser'
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'coriandrum',
     'apps.public_rating',
     'apps.api',
+    'apps.god',
     'rest_framework',
 ]
 
@@ -53,7 +54,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'coriandrum.urls'
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'coriandrum.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../media/db.sqlite3'),
     }
 }
 
@@ -125,3 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
