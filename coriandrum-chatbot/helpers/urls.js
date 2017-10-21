@@ -1,5 +1,5 @@
 var VK_API = 'https://api.vk.com/method/';
-var CRNDRM_API = 'http://46.101.172.191/api/';
+var CRNDRM_API = 'https://coriandrum-sativum.com/api/';
 
 module.exports = {
   VK_MESSAGES_SEND: VK_API + 'messages.send',
