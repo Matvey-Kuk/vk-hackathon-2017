@@ -21,6 +21,7 @@ from django.views.static import serve
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('apps.api.urls')),
+    url(r'^god/', include('apps.god.urls')),
     url(r'^', include('apps.public_rating.urls')),
 ]
 

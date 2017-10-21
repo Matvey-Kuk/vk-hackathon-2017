@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'coriandrum',
     'apps.public_rating',
     'apps.api',
+    'apps.god',
     'rest_framework',
 ]
 
@@ -53,7 +54,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'coriandrum.urls'

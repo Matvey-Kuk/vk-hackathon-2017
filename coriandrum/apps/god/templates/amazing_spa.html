@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% verbatim %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>God | Coriandrum Sativum</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+</head>
+<body>
+
+<div id="app">
+    <ol>
+        <li v-for="post in posts">
+            Id: {{ post.id }} <br>
+            Author: {{ post.author }} <br>
+            Text: {{ post.text }} <br>
+            Status: {{ post.status }} <br>
+            <button v-on:click="movePost(post.id, 'on_consideration')">Say hi</button>
+        </li>
+    </ol>
+</div>
+
+<script>
+
+    Vue.http.interceptors.push(function(request, next) {
+
+        // modify headers
+        request.headers.set('Content-Type', 'application/json');
+
+        // continue to next interceptor
+        next();
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            posts: []
+        },
+        methods: {
+            loadList: function() {
+                this.$http.get('/api/post/', {})
+                    .then(function(response) {
+                        this.posts = response.body;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            },
+            movePost: function(post_id, type) {
+                this.$http.put('/api/post/' + post_id + "/", {
+                    text: "I'm frontend"
+                })
+                    .then(function(response) {
+                        this.loadList();
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            }
+        },
+        created: function(){
+            this.loadList();
+
+            setInterval(function () {
+                this.loadList();
+            }.bind(this), 3000);
+        }
+    })
+</script>
+
+</body>
+</html>
+{% endverbatim %}

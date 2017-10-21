@@ -58,6 +58,8 @@ class Post(models.Model):
         (STATUS_PUBLISHED, 'Опубликован'),
     )
 
+    raw_vk_attachments_payload = models.TextField(default="")
+
     status = models.CharField(
         max_length=25,
         choices=STATUS_CHOICES,
@@ -66,6 +68,12 @@ class Post(models.Model):
 
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
     text = models.TextField()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        print(self.raw_vk_attachments_payload)
+        super(Post, self).save(force_insert=False, force_update=False,
+                               using=None, update_fields=None)
 
 
 class PostAttachment(models.Model):

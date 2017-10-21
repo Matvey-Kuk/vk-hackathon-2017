@@ -10,11 +10,11 @@ class CoriandrumUserSerializer(serializers.HyperlinkedModelSerializer):
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
 
-    author = serializers.PrimaryKeyRelatedField(read_only=False, queryset=CoriandrumUser.objects.all())
+    author = serializers.PrimaryKeyRelatedField(read_only=False, queryset=CoriandrumUser.objects.all(), required=False)
 
     class Meta:
         model = Post
-        fields = ('id', 'author', 'text', 'status')
+        fields = ('id', 'author', 'text', 'status', 'raw_vk_attachments_payload')
 
 
 class PostAttachmentSerializer(serializers.HyperlinkedModelSerializer):
