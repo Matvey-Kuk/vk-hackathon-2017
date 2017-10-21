@@ -14,6 +14,18 @@ var sendToDb = function (dbUserId, text, attachments) {
   });
 };
 
+var createNewUser = function (userId, callback) {
+  makeRequest({
+    url: urls.CRNDRM_USERS,
+    method: 'POST',
+    form: {
+      vk_user_id: userId
+    }
+  }, function (error, response, body) {
+    callback(error, response, body);
+  });
+};
+
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
@@ -53,14 +65,19 @@ var handleNewMessage = function (object) {
            // console.log("404");
 
             // if user doesn't exist, create it
-            makeRequest({
-              url: urls.CRNDRM_USERS,
-              method: 'POST',
-              form: {
-                vk_user_id: userId
-              }
-            }, function (error, response, body) {
-             // console.log("post body", body);
+            // makeRequest({
+            //   url: urls.CRNDRM_USERS,
+            //   method: 'POST',
+            //   form: {
+            //     vk_user_id: userId
+            //   }
+            // }, function (error, response, body) {
+            //  // console.log("post body", body);
+            //   if (body && body.id) {
+            //     dbUserId = body.id;
+            //   }
+            // });
+            createNewUser(userId, function (error, response, body) {
               if (body && body.id) {
                 dbUserId = body.id;
               }
