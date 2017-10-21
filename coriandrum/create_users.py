@@ -25,15 +25,15 @@ def create_users_with_posts(n_users):
             n_posts = random.choice(range(35))
             for p in range(n_posts):
                 create_published_post(u)
-        print "Created user {} with {} published posts".format(vk_user_id,
-                                                               n_posts)
+        print("Created user {} with {} published posts".format(vk_user_id,
+                                                               n_posts))
 
 
 if __name__ == '__main__':
     usage = ("Usage: python create_users.py n_users\n"
              "Creates n_users users with random number of published posts")
     if len(sys.argv) == 1:
-        print usage
+        print(usage)
         exit()
     n_users = int(sys.argv[1])
     create_users_with_posts(n_users)
