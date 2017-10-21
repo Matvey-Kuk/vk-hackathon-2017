@@ -50,22 +50,6 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
-// var getReply = function (text) {
-//   var reply;
-
-//   switch (text) {
-//     case '1':
-//       console.log('1');
-//       reply = '1111';
-//       break;
-//     default:
-//       console.log('default');
-//       reply = 'default';
-//   }
-
-//   return reply;
-// };
-
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
