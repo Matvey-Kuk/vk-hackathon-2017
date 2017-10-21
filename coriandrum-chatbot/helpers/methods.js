@@ -49,6 +49,35 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
+var replyHandler = function (error, response, body) {
+  console.log(body);
+  if (!error && response.statusCode == 200) {
+
+    var dbUserId;
+
+    // find user
+    findUser(userId, function (error, response, body) {
+      if (!error && response.statusCode == 404) {
+        createNewUser(userId, function (error, response, body) {
+          if (body && body.id) {
+            dbUserId = body.id;
+          }
+        });
+      } else {
+        console.log("EXISTING USER", JSON.parse(body).id);
+        dbUserId = JSON.parse(body).id;
+      }
+      // send to db
+
+      console.log("dbuserid", dbUserId);
+      sendToDb(dbUserId, text, attachments);
+    });
+
+  } else {
+   // console.log("ERROR", error);
+  }
+};
+
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
@@ -66,34 +95,7 @@ var handleNewMessage = function (object) {
     }
 
     // reply to chat
-    replyToChat(reply, userId, function (error, response, body) {
-      console.log(body);
-      if (!error && response.statusCode == 200) {
-
-        var dbUserId;
-
-        // find user
-        findUser(userId, function (error, response, body) {
-          if (!error && response.statusCode == 404) {
-            createNewUser(userId, function (error, response, body) {
-              if (body && body.id) {
-                dbUserId = body.id;
-              }
-            });
-          } else {
-            console.log("EXISTING USER", JSON.parse(body).id);
-            dbUserId = JSON.parse(body).id;
-          }
-          // send to db
-
-          console.log("dbuserid", dbUserId);
-          sendToDb(dbUserId, text, attachments);
-        });
-
-      } else {
-       // console.log("ERROR", error);
-      }
-    });
+    replyToChat(reply, userId, replyHandler);
 };
 
 module.exports = {
