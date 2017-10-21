@@ -5,7 +5,15 @@ from coriandrum.models import CoriandrumUser, Post, PostAttachment
 class CoriandrumUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CoriandrumUser
-        fields = ('id', 'vk_user_id', "vk_avatar", "vk_name")
+        fields = ("id",
+                  "vk_user_id",
+                  "vk_avatar",
+                  "vk_name",
+                  "n_all_posts",
+                  "n_published",
+                  "level",
+                  "recently_leveled_up",
+                  )
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):

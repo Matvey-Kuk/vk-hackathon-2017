@@ -46,11 +46,20 @@ class CoriandrumUser(AbstractUser):
             return None
 
     @property
-    def published_posts(self):
+    def all_posts(self):
+        ''' Return all posts by a user '''
         user_posts = Post.objects.filter(author__vk_user_id__contains=
                                          self.vk_user_id)
+        return user_posts
 
-        published_posts = [p for p in user_posts if p.status == "published"]
+    @property
+    def n_all_posts(self):
+        return len(self.all_posts)
+
+    @property
+    def published_posts(self):
+        published_posts = ([p for p in self.all_posts
+                           if p.status == "published"])
         return published_posts
 
     @property
@@ -72,6 +81,17 @@ class CoriandrumUser(AbstractUser):
         for level in range(7)[::-1]:
             if n_published >= reqs[level]:
                 return level
+
+    @property
+    def recently_leveled_up(self):
+        '''
+        Return True if the last published post resulted in a
+        levelup of the user '''
+        # TODO: remove duplication
+        if self.n_published in [1, 2, 5, 10, 20, 30]:
+            return True
+        else:
+            return False
 
 
 class Achievement(models.Model):
