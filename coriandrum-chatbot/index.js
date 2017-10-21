@@ -3,6 +3,11 @@ var express = require('express');
 var app = express();
 var makeRequest = require('request');
 
+
+var requestDebug = require('request-debug');
+
+requestDebug(makeRequest);
+
 var MESSAGES_SEND_URL = 'https://api.vk.com/method/messages.send';
 
 var getToken = require('./helpers/tokens').get;
