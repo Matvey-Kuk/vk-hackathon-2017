@@ -1,5 +1,5 @@
 
-db.sqlite3
+media/db.sqlite3
 *.pyc
 *.__pycache__
 *node_modules

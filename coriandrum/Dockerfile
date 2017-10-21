@@ -45,6 +45,8 @@ WORKDIR /opt/app
 
 RUN if [ ! -f secret_key.txt ]; then openssl rand -base64 32 > secret_key.txt; fi
 
+CMD python3 manage.py collectstatic --noinput
+
 CMD python3 manage.py migrate --noinput && uwsgi --ini=uwsgi.ini
 
 EXPOSE 80
