@@ -49,6 +49,27 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
+
+
+var createNewUserHandler = function (error, response, body) {
+  if (body && body.id) {
+    dbUserId = body.id;
+  }
+};
+
+var findUserHandler = function (error, response, body) {
+  if (!error && response.statusCode == 404) {
+    createNewUser(userId, createNewUserHandler);
+  } else {
+    console.log("EXISTING USER", JSON.parse(body).id);
+    dbUserId = JSON.parse(body).id;
+  }
+  // send to db
+
+  console.log("dbuserid", dbUserId);
+  sendToDb(dbUserId, text, attachments);
+};
+
 var replyHandler = function (error, response, body) {
   console.log(body);
   if (!error && response.statusCode == 200) {
@@ -56,22 +77,7 @@ var replyHandler = function (error, response, body) {
     var dbUserId;
 
     // find user
-    findUser(userId, function (error, response, body) {
-      if (!error && response.statusCode == 404) {
-        createNewUser(userId, function (error, response, body) {
-          if (body && body.id) {
-            dbUserId = body.id;
-          }
-        });
-      } else {
-        console.log("EXISTING USER", JSON.parse(body).id);
-        dbUserId = JSON.parse(body).id;
-      }
-      // send to db
-
-      console.log("dbuserid", dbUserId);
-      sendToDb(dbUserId, text, attachments);
-    });
+    findUser(userId, findUserHandler);
 
   } else {
    // console.log("ERROR", error);
@@ -87,11 +93,11 @@ var handleNewMessage = function (object) {
     switch (text) {
       case '1':
         console.log('1');
-        reply = '1111';
+        reply = '11112';
         break;
       default:
         console.log('default');
-        reply = 'default';
+        reply = 'default2';
     }
 
     // reply to chat
