@@ -31,13 +31,10 @@ var handleNewMessage = function (object) {
         console.log("BODY", body);
 
         makeRequest({
-          url: urls.CRNDRM_USERS,
-          method: 'GET',
-          headers: {
-            user: userId
-          }
+          url: urls.CRNDRM_USERS + userId,
+          method: 'GET'
         }, function (error, response, body) {
-          console.log("CRDRMMM", body);
+          console.log("CRDRMMM::", body);
         });
       } else {
         console.log("ERROR", error);
