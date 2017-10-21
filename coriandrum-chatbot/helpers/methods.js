@@ -53,11 +53,11 @@ var handleNewMessage = function (object) {
               }
             });
           } else {
-            console.log("EXISTING USER", body.id);
+            console.log("EXISTING USER", body);
             dbUserId = body.id;
           }
 
-          console.log("dbUserid,", dbUserId);
+          console.log("dbUserId,", dbUserId);
         });
 
       } else {
