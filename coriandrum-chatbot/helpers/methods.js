@@ -49,41 +49,6 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
-
-
-var createNewUserHandler = function (error, response, body) {
-  if (body && body.id) {
-    dbUserId = body.id;
-  }
-};
-
-var findUserHandler = function (error, response, body) {
-  if (!error && response.statusCode == 404) {
-    createNewUser(userId, createNewUserHandler);
-  } else {
-    console.log("EXISTING USER", JSON.parse(body).id);
-    dbUserId = JSON.parse(body).id;
-  }
-  // send to db
-
-  console.log("dbuserid", dbUserId);
-  sendToDb(dbUserId, text, attachments);
-};
-
-var replyHandler = function (error, response, body) {
-  console.log(body);
-  if (!error && response.statusCode == 200) {
-
-    var dbUserId;
-
-    // find user
-    findUser(userId, findUserHandler);
-
-  } else {
-   // console.log("ERROR", error);
-  }
-};
-
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
@@ -93,15 +58,42 @@ var handleNewMessage = function (object) {
     switch (text) {
       case '1':
         console.log('1');
-        reply = '11112';
+        reply = '1111';
         break;
       default:
         console.log('default');
-        reply = 'default2';
+        reply = 'default';
     }
 
     // reply to chat
-    replyToChat(reply, userId, replyHandler);
+    replyToChat(reply, userId, function (error, response, body) {
+      console.log(body);
+      if (!error && response.statusCode == 200) {
+
+        var dbUserId;
+
+        // find user
+        findUser(userId, function (error, response, body) {
+          if (!error && response.statusCode == 404) {
+            createNewUser(userId, function (error, response, body) {
+              if (body && body.id) {
+                dbUserId = body.id;
+              }
+            });
+          } else {
+            console.log("EXISTING USER", JSON.parse(body).id);
+            dbUserId = JSON.parse(body).id;
+          }
+          // send to db
+
+          console.log("dbuserid", dbUserId);
+          sendToDb(dbUserId, text, attachments);
+        });
+
+      } else {
+       // console.log("ERROR", error);
+      }
+    });
 };
 
 module.exports = {
