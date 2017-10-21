@@ -2,6 +2,18 @@ var urls = require('./urls.js');
 var makeRequest = require('request');
 var requestDebug = require('request-debug');
 
+var sendToDb = function (dbUserId, text, attachments) {
+  makeRequest({
+    url: urls.CRNDRM_POST,
+    method: 'POST',
+    form: {
+      author: dbUserId,
+      text: text,
+      attachments: JSON.stringify(attachments)
+    }
+  });
+};
+
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
@@ -61,15 +73,7 @@ var handleNewMessage = function (object) {
         //  console.log("dbUserId,", dbUserId);
 
           // send to db
-          makeRequest({
-            url: urls.CRNDRM_POST,
-            method: 'POST',
-            form: {
-              author: dbUserId,
-              text: text,
-              attachments: JSON.stringify(attachments)
-            }
-          })
+          sendToDb(dbUserId, text, attachments);
         });
 
       } else {
