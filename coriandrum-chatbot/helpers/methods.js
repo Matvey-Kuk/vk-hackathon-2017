@@ -1,5 +1,6 @@
-
 var urls = require('./urls.js');
+var makeRequest = require('request');
+var requestDebug = require('request-debug');
 
 var handleNewMessage = function (object) {
     var userId = object.user_id;
