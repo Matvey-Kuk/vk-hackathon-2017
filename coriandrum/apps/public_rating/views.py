@@ -14,9 +14,10 @@ def leaderboard(request):
 
 def contributor(request, user_id):
     if request.method == "GET":
-        user = CoriandrumUser.objects.filter(vk_user_id=user_id)[0]
-        if not user:
+        user_qs = CoriandrumUser.objects.filter(vk_user_id=user_id)
+        if not user_qs:
             return HttpResponse("404", status=404)
+        user = user_qs[0]
         context = {
             "user": user,
         }
