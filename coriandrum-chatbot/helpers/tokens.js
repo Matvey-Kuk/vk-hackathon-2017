@@ -18,10 +18,14 @@ var get = function (callback) {
   }, function (error, response, body) {
     // console.log(error);
     // console.log(response);
-    console.log(body);
+    var tokens = {
+      ACCESS: body.ACCESS_TOKEN,
+      CONFIRM: body.CONFIM_TOKEN
+    };
+    console.log(tokens);
     if (!error) {
      // console.log("TOKENS BODY", body);
-      callback();
+      callback(tokens);
     } else {
      // console.log("TOKENS ERROR", error);
     }
