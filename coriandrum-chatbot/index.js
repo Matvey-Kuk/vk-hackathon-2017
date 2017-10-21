@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var makeRequest = require('request');
 var requestDebug = require('request-debug');
-var URLS = require('../helpers/urls');
+var URLS = require('./helpers/urls');
 
 requestDebug(makeRequest);
 
