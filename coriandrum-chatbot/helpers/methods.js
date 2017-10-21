@@ -54,6 +54,8 @@ var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
     var attachments = object.attachments;
+
+    console.log("ATTACHMENTS", attachments);
     var reply;
 
     switch (text) {
