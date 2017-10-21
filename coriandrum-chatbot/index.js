@@ -1,5 +1,5 @@
 var bodyParser = require('body-parser');
-var express = require('express');
+//var express = require('express');
 var makeRequest = require('request');
 var requestDebug = require('request-debug');
 
@@ -7,9 +7,9 @@ var urls = require('./helpers/urls.js');
 var methods = require('./helpers/methods.js');
 requestDebug(makeRequest);
 
-var app = express();
+//var app = express();
 app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 app.post('/', function(request, response) {
