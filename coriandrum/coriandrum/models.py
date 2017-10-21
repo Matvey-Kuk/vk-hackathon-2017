@@ -104,3 +104,7 @@ class Post(models.Model):
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
     text = models.TextField()
 
+
+class PostAttachment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    raw_vk_attachment_payload = models.TextField()
