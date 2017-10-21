@@ -48,9 +48,12 @@ class CoriandrumUser(AbstractUser):
     @property
     def all_posts(self):
         ''' Return all posts by a user '''
-        user_posts = Post.objects.filter(author__vk_user_id__contains=
-                                         self.vk_user_id)
-        return user_posts
+        if self.vk_user_id:
+            user_posts = Post.objects.filter(author__vk_user_id__contains=
+                                             self.vk_user_id)
+            return user_posts
+        else:
+            return []
 
     @property
     def n_all_posts(self):

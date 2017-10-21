@@ -26,7 +26,7 @@
     Vue.http.interceptors.push(function(request, next) {
 
         // modify headers
-        request.headers.set('Content-Type', 'application/json');
+        request.headers.set('Content-Type', 'application/json ');
 
         // continue to next interceptor
         next();
