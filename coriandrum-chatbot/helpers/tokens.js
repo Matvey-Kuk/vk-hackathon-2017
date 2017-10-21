@@ -22,7 +22,9 @@ var get = function (callback) {
       ACCESS: body.ACCESS_TOKEN,
       CONFIRM: body.CONFIM_TOKEN
     };
-    console.log(tokens);
+
+    console.log("BODY", body)
+    console.log("TOKENS", tokens);
     if (!error) {
      // console.log("TOKENS BODY", body);
       callback(tokens);
