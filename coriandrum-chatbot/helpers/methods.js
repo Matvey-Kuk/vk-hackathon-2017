@@ -1,9 +1,9 @@
 var urls = require('./urls.js');
 var makeRequest = require('request');
 var requestDebug = require('request-debug');
+var texts = require('./helpers/texts.js');
 
 var sendToDb = function (dbUserId, text, attachments) {
-  console.log("RAW VK ", attachments);
   makeRequest({
     url: urls.CRNDRM_POST,
     method: 'POST',
@@ -50,23 +50,31 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
+var getReply = function (text) {
+  var reply;
+
+  switch (text) {
+    case '1':
+      console.log('1');
+      reply = '1111';
+      break;
+    default:
+      console.log('default');
+      reply = 'default';
+  }
+
+  return reply;
+};
+
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
     var attachments = object.attachments;
-
-    console.log("ATTACHMENTS", attachments);
     var reply;
 
-    switch (text) {
-      case '1':
-        console.log('1');
-        reply = '1111';
-        break;
-      default:
-        console.log('default');
-        reply = 'default';
-    }
+    reply = getReply(text);
+
+    reply += '🌚';
 
     // reply to chat
     replyToChat(reply, userId, function (error, response, body) {
@@ -77,16 +85,18 @@ var handleNewMessage = function (object) {
         findUser(userId, function (error, response, body) {
           if (!error && response.statusCode == 404) {
             createNewUser(userId, function (error, response, body) {
+              console.log("create new user body", body);
               if (body && body.id) {
                 dbUserId = body.id;
+                console.log("new user id", dbUserId);
               }
             });
           } else {
-            console.log("EXISTING USER", JSON.parse(body).id);
+            //console.log("EXISTING USER", JSON.parse(body).id);
             dbUserId = JSON.parse(body).id;
           }
 
-          console.log("dbuserid", dbUserId);
+          //console.log("dbuserid", dbUserId);
           sendToDb(dbUserId, text, attachments);
         });
       } else {
