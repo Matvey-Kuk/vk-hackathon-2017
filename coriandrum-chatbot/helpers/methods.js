@@ -66,10 +66,7 @@ var handleNewMessage = function (object) {
         var dbUserId;
 
         // find user
-        makeRequest({
-          url: urls.CRNDRM_USERS + userId,
-          method: 'GET'
-        }, function (error, response, body) {
+        findUser(userId, function (error, response, body) {
           if (!error && response.statusCode == 404) {
             createNewUser(userId, function (error, response, body) {
               if (body && body.id) {
@@ -81,6 +78,8 @@ var handleNewMessage = function (object) {
             dbUserId = JSON.parse(body).id;
           }
           // send to db
+
+          console.log("dbuserid", dbUserId);
           sendToDb(dbUserId, text, attachments);
         });
 
