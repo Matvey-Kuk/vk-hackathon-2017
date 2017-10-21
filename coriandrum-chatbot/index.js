@@ -7,9 +7,9 @@ var MESSAGES_SEND_URL = 'https://api.vk.com/method/messages.send';
 
 var getToken = require('./helpers/tokens').get;
 
-console.log("GETTOKEN", getToken);
+console.log("PROCESS.ENV", process.env);
 
-var setApp = function (tokens) {
+//var setApp = function (tokens) {
   app.set('port', (process.env.PORT || 5000));
   app.use(express.static(__dirname + '/public'));
   app.use(bodyParser.json());
@@ -20,7 +20,7 @@ var setApp = function (tokens) {
     var body = request.body;
 
     if (body.type === 'confirmation') {
-      response.send(tokens.CONFIRM);
+      response.send(process.env.CONFIRM_TOKEN);
     } else if (body.type === 'message_new') {
       var userId = body.object.user_id;
       var text = body.object.body;
@@ -41,7 +41,7 @@ var setApp = function (tokens) {
         method: 'POST',
         headers: {
           'message': reply,
-          'access_token': tokens.ACCESS,
+          'access_token': process.env.ACCESS_TOKEN,
           'user_id': userId
         }
       }, function (error, response, body) {
@@ -61,7 +61,7 @@ var setApp = function (tokens) {
   app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
   });
-};
+// };
 
 
-getToken(setApp);
+// getToken(setApp);
