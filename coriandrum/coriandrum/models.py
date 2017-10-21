@@ -1,12 +1,13 @@
+import json
 import requests
 
 from django.db import models
-from django.utils.functional import cached_property
 from django.contrib.auth.models import AbstractUser
 
 
 class CoriandrumUser(AbstractUser):
     vk_user_id = models.IntegerField(unique=True, blank=True, null=True)
+    raw_vk_user_cache = models.TextField(blank=True, default="")
     level = models.IntegerField(default=0, unique=False)
 
     def save(self, *args, **kwargs):
@@ -18,9 +19,14 @@ class CoriandrumUser(AbstractUser):
     def achievements(self):
         return Achievement.objects.all()
 
-    @cached_property
+    @property
     def raw_vk_user(self):
-        return requests.get("https://api.vk.com/method/users.get?uids=" + str(self.vk_user_id) + "&fields=photo_200").json()['response'][0]
+        if self.raw_vk_user_cache == "":
+            self.raw_vk_user_cache = json.dumps(requests.get(
+                "https://api.vk.com/method/users.get?uids=" + str(self.vk_user_id) + "&fields=photo_200"
+            ).json()['response'][0])
+            self.save()
+        return json.loads(self.raw_vk_user_cache)
 
     @property
     def vk_name(self):
@@ -37,5 +43,27 @@ class Achievement(models.Model):
 
 
 class Post(models.Model):
+
+    STATUS_NEW = 'new'
+    STATUS_IN_CONSIDERATION = 'in_consideration'
+    STATUS_LOOKS_INTERESTING = 'looks_interesting'
+    STATUS_TRASH = 'trash'
+    STATUS_PUBLISHED = 'published'
+
+    STATUS_CHOICES = (
+        (STATUS_NEW, 'Новый пост'),
+        (STATUS_IN_CONSIDERATION, 'Заблокирован редактором на осознание'),
+        (STATUS_LOOKS_INTERESTING, 'Понравился редактору'),
+        (STATUS_TRASH, 'В топке'),
+        (STATUS_PUBLISHED, 'Опубликован'),
+    )
+
+    status = models.CharField(
+        max_length=25,
+        choices=STATUS_CHOICES,
+        default=STATUS_NEW,
+    )
+
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
     text = models.TextField()
+
