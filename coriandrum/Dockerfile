@@ -41,11 +41,13 @@ VOLUME ["/opt/media"]
 
 WORKDIR /opt/app
 
+ENV DJANGO_SETTINGS_MODULE=coriandrum.settings_production
+
 # Creating secret application code if not exists
 
 RUN if [ ! -f secret_key.txt ]; then openssl rand -base64 32 > secret_key.txt; fi
 
-CMD python3 manage.py collectstatic --noinput
+RUN python3 manage.py collectstatic --noinput
 
 CMD python3 manage.py migrate --noinput && uwsgi --ini=uwsgi.ini
 
