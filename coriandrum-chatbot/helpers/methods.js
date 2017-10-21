@@ -44,11 +44,11 @@ var handleNewMessage = function (object) {
     switch (text) {
       case '1':
         console.log('1');
-        reply = '1111___';
+        reply = '1111';
         break;
       default:
         console.log('default');
-        reply = 'default____';
+        reply = 'default';
     }
 
     // reply to chat
