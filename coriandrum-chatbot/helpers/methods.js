@@ -50,21 +50,21 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
-var getReply = function (text) {
-  var reply;
+// var getReply = function (text) {
+//   var reply;
 
-  switch (text) {
-    case '1':
-      console.log('1');
-      reply = '1111';
-      break;
-    default:
-      console.log('default');
-      reply = 'default';
-  }
+//   switch (text) {
+//     case '1':
+//       console.log('1');
+//       reply = '1111';
+//       break;
+//     default:
+//       console.log('default');
+//       reply = 'default';
+//   }
 
-  return reply;
-};
+//   return reply;
+// };
 
 var handleNewMessage = function (object) {
     var userId = object.user_id;
@@ -76,31 +76,33 @@ var handleNewMessage = function (object) {
 
 
     var handle = function (reply, dbUser) {
-        if (!dbUser || !dbUser.id) {
-          return;
+      if (!dbUser || !dbUser.id) {
+        return;
+      }
+
+      sendToDb(dbUser.id, text, attachments);
+
+      replyToChat(reply, userId, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log("bot success");
+        } else {
+          console.log("bot error", error);
         }
-
-        sendToDb(dbUser.id, text, attachments);
-
-        replyToChat(reply, userId, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-            console.log("bot success");
-          } else {
-            console.log("bot error", error);
-          }
-        });
+      });
     };
 
     findUser(userId, function (error, response, body) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
           dbUser = JSON.parse(body);
-          reply += ' new user';
+          console.log("new user", dbUser);
+          reply += texts.onFirstMsg();
 
           handle(reply, dbUser);
         });
       } else {
         dbUser = JSON.parse(body);
+        console.log("existing user", dbUser);
         reply += 'hello, ' + dbUser.vk_name;
 
         handle(reply, dbUser);
