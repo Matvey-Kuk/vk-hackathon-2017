@@ -76,13 +76,11 @@ var handleNewMessage = function (object) {
 
 
     var handle = function (reply, dbUser) {
-        dbUserId = dbUser.id;
-
-        if (!dbUser || !dbUserId) {
+        if (!dbUser || !dbUser.id) {
           return;
         }
 
-        sendToDb(dbUserId, text, attachments);
+        sendToDb(dbUser.id, text, attachments);
 
         replyToChat(reply, userId, function (error, response, body) {
           if (!error && response.statusCode == 200) {
@@ -96,55 +94,19 @@ var handleNewMessage = function (object) {
     findUser(userId, function (error, response, body) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
+          dbUser = JSON.parse(body);
           reply += ' new user';
 
-          handle(reply, JSON.parse(body));
-
-          // dbUser = JSON.parse(body);
-          // dbUserId = dbUser.id;
-
-          // if (!dbUser || !dbUserId) {
-          //   return;
-          // }
-
-          // sendToDb(dbUserId, text, attachments);
-
-          // replyToChat(reply, userId, function (error, response, body) {
-          //   if (!error && response.statusCode == 200) {
-          //     console.log("bot success");
-          //   } else {
-          //     console.log("bot error", error);
-          //   }
-          // });
+          handle(reply, dbUser);
         });
       } else {
+        dbUser = JSON.parse(body);
         reply += 'hello, ' + dbUser.vk_name;
 
-        handle(reply, JSON.parse(body));
-
-        // dbUser = JSON.parse(body);
-        // dbUserId = dbUser.id;
-
-        // if (!dbUser || !dbUserId) {
-        //   return;
-        // }
-
-        // sendToDb(dbUserId, text, attachments);
-
-        // replyToChat(reply, userId, function (error, response, body) {
-        //   if (!error && response.statusCode == 200) {
-        //     console.log("bot success");
-        //   } else {
-        //     console.log("bot error", error);
-        //   }
-        // });
+        handle(reply, dbUser);
       }
 
     });
-
-
-
-
 
 };
 
