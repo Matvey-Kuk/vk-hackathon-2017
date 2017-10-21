@@ -10,7 +10,7 @@ requestDebug(makeRequest);
 
 var MESSAGES_SEND_URL = 'https://api.vk.com/method/messages.send';
 
-var getToken = require('./helpers/tokens').get;
+//var getToken = require('./helpers/tokens').get;
 
 console.log("PROCESS.ENV", process.env);
 
@@ -44,7 +44,7 @@ console.log("PROCESS.ENV", process.env);
       makeRequest({
         url: MESSAGES_SEND_URL,
         method: 'POST',
-        headers: {
+        form: {
           'message': reply,
           'access_token': process.env.ACCESS_TOKEN,
           'user_id': userId
