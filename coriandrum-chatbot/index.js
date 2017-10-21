@@ -39,7 +39,7 @@ var setApp = function (tokens) {
       makeRequest({
         url: MESSAGES_SEND_URL,
         method: 'POST',
-        form: {
+        headers: {
           'message': reply,
           'access_token': tokens.ACCESS,
           'user_id': userId
