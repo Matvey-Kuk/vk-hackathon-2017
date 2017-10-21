@@ -3,6 +3,7 @@ from coriandrum.models import CoriandrumUser, Post, PostAttachment
 
 
 class CoriandrumUserSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = CoriandrumUser
         fields = ("id",
