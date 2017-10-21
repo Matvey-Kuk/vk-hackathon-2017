@@ -6,5 +6,13 @@
 
     <body>
         <h1>Leaderboard</h1>
+        {% for user in all_users %}
+            <h1>===============</h1>
+            <h1>vk_user_id = {{user.vk_user_id}}</h1>
+            <h1>name = {{user.vk_name}}</h1>
+            <h1>level = {{user.level}}</h1>
+            <h1>published posts = {{user.n_published}}</h1>
+            <h1>avatar = {{user.vk_avatar}}</h1>
+        {% endfor %}
     </body>
 </html>
