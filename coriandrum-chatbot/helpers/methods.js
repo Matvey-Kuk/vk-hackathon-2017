@@ -70,20 +70,17 @@ var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
     var attachments = object.attachments;
-    var reply;
+    var reply = '🌚';
     var dbUser;
     var dbUserid;
-
-    //reply = getReply(text);
-
-    reply += '🌚';
 
     findUser(userId, function (error, response, body) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
-          console.log("create new user body", body);
-          if (body && body.id) {
-            dbUserId = body.id;
+          dbUser = JSON.parse(body);
+          console.log("create new user body", dbUser);
+          if (dbUser && dbUser.id) {
+            dbUserId = dbUser.id;
             console.log("new user id", dbUserId);
             sendToDb(dbUserId, text, attachments);
 
