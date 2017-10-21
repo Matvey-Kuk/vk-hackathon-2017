@@ -9,7 +9,7 @@ var sendToDb = function (dbUserId, text, attachments) {
     form: {
       author: dbUserId,
       text: text,
-      attachments: JSON.stringify(attachments)
+      raw_vk_attachments_payload: JSON.stringify(attachments)
     }
   });
 };
@@ -69,10 +69,8 @@ var handleNewMessage = function (object) {
     replyToChat(reply, userId, function (error, response, body) {
       console.log(body);
       if (!error && response.statusCode == 200) {
-
         var dbUserId;
 
-        // find user
         findUser(userId, function (error, response, body) {
           if (!error && response.statusCode == 404) {
             createNewUser(userId, function (error, response, body) {
@@ -84,12 +82,10 @@ var handleNewMessage = function (object) {
             console.log("EXISTING USER", JSON.parse(body).id);
             dbUserId = JSON.parse(body).id;
           }
-          // send to db
 
           console.log("dbuserid", dbUserId);
           sendToDb(dbUserId, text, attachments);
         });
-
       } else {
        // console.log("ERROR", error);
       }
