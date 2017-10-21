@@ -4,7 +4,8 @@ var requestDebug = require('request-debug');
 
 requestDebug(makeRequest);
 
-console.log("PROCESS.ENV", process.env);
+console.log("PROCESS.ENV", process.env.API_Key,
+ (Buffer.from(process.env.API_Key).toString('base64'));
 
 var get = function (callback) {
   makeRequest({
@@ -12,7 +13,7 @@ var get = function (callback) {
     method: 'GET',
     headers: {
       'Accept': 'application/vnd.heroku+json; version=3',
-      'Authorization': 'Basic $API_KEY'
+      'Authorization': 'Basic ' + (Buffer.from(process.env.API_Key).toString('base64')
     }
   }, function (error, response, body) {
     // console.log(error);
