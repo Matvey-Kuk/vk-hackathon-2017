@@ -16,6 +16,6 @@ def contributor(request, user_id):
             return HttpResponse("404", status=404)
         context = {
             "user_id": user.vk_user_id,
-            "achievements": user.achievements,
+            "level": user.level,
         }
         return render(request, "public_rating/contributor.html", context)
