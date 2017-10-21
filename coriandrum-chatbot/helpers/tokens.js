@@ -5,8 +5,8 @@ var requestDebug = require('request-debug');
 requestDebug(makeRequest);
 
 
-console.log("PROCESS.ENV", process.env.API_Key);
-var b64 = (Buffer.from(process.env.API_Key)).toString('base64');
+console.log("PROCESS.ENV", process.env.API_KEY);
+var b64 = (Buffer.from(process.env.API_KEY)).toString('base64');
 
 console.log("BASE 64 ", b64);
 
