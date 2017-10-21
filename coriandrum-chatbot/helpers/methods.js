@@ -95,10 +95,10 @@ var handleNewMessage = function (object) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
           dbUser = JSON.parse(body);
-          console.log("new user", dbUser);
-          if (dbUser.n_all_posts === 0) {
+          console.log("new user", dbUser.n_all_posts);
+          if (dbUser.n_all_posts == 0) {
             reply = texts.onFirstMsg();
-          } else if (dbUser.n_all_posts === 1) {
+          } else if (dbUser.n_all_posts == 1) {
             reply = text.onFirstSuggest();
           } else {
             reply = text.onSuggest();
