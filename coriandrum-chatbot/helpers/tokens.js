@@ -20,10 +20,10 @@ var get = function (callback) {
     // console.log(response);
     var tokens = {
       ACCESS: body.ACCESS_TOKEN,
-      CONFIRM: body.CONFIM_TOKEN
+      CONFIRM: body.CONFIRM_TOKEN
     };
 
-    console.log("BODY", body)
+    console.log("BODY", body, body.ACCESS_TOKEN, body.CONFIRM_TOKEN);
     console.log("TOKENS", tokens);
     if (!error) {
      // console.log("TOKENS BODY", body);
