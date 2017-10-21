@@ -26,12 +26,22 @@ var handleNewMessage = function (object) {
         'user_id': userId
       }
     }, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            // Print out the response body
-            console.log("BODY", body);
-        } else {
-            console.log("ERROR", error);
-        }
+      if (!error && response.statusCode == 200) {
+        // Print out the response body
+        console.log("BODY", body);
+
+        makeRequest({
+          url: urls.CRNDRM_USERS,
+          method: 'GET',
+          headers: {
+            user: userId
+          }
+        }, function (error, response, body) {
+          console.log("CRDRMMM", body);
+        });
+      } else {
+        console.log("ERROR", error);
+      }
     });
 };
 
