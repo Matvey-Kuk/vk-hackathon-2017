@@ -96,14 +96,20 @@ var handleNewMessage = function (object) {
         createNewUser(userId, function (error, response, body) {
           dbUser = JSON.parse(body);
           console.log("new user", dbUser);
-          reply += texts.onFirstMsg();
+          if (dbUser.n_all_posts === 0) {
+            reply = texts.onFirstMsg();
+          } else if (dbUser.n_all_posts === 1) {
+            reply = text.onFirstSuggest();
+          } else {
+            reply = text.onSuggest();
+          }
 
           handle(reply, dbUser);
         });
       } else {
         dbUser = JSON.parse(body);
         console.log("existing user", dbUser);
-        reply += 'hello, ' + dbUser.vk_name;
+        reply = texts.onFirstMsg();
 
         handle(reply, dbUser);
       }
