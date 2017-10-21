@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <title>Специальный корреспондент</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/public_rating/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
   </head>
   <body>
     <div class="container">
       <div class="user">
         <div class="title">Специальный корреспондент</div>
-        <div class="avatar"></div>
+        <div class="avatar" style="background-image: url("images/ivan.jpeg");"></div>
         <div class="name">Иванов Иван</div>
       </div>
       <div class="divider"></div>
@@ -18,8 +18,8 @@
         <div class="title">Текущий статус</div>
         <div class="statusbox__title">Middle Редактор (7 опубликованных новостей)</div>
         <div class="badge-wrapper">
-          <div class="badge{% if level >= 1 %} badge_active{% endif %}{% if level == 1 %} badge_current{% endif %}">
-            <img src="../../static/public_rating/intern.png">
+          <div class="badge{% if level >= 1 %} badge_active{% else %} badge_disabled{% endif %}{% if level == 1 %} badge_current{% endif %}">
+            <img src="/static/intern.png">
             <div class="badge__text">
               Intern
             </div>
@@ -27,8 +27,8 @@
               1/1
             </div>
           </div>
-          <div class="badge{% if level >= 2 %} badge_active{% endif %}{% if level == 2 %} badge_current{% endif %}">
-            <img src="../../static/public_rating/junior.png">
+          <div class="badge{% if level >= 2 %} badge_active{% else %} badge_disabled{% endif %}{% if level == 2 %} badge_current{% endif %}">
+            <img src="/static/junior.png">
             <div class="badge__text">
               Junior
             </div>
@@ -36,8 +36,8 @@
               2/2
             </div>
           </div>
-          <div class="badge{% if level >= 3 %} badge_active{% endif %}{% if level == 3 %} badge_current{% endif %}">
-            <img src="../../static/public_rating/middle.png">
+          <div class="badge{% if level >= 3 %} badge_active{% else %} badge_disabled{% endif %}{% if level == 3 %} badge_current{% endif %}">
+            <img src="/static/middle.png">
             <div class="badge__text">
               Middle
             </div>
@@ -45,8 +45,8 @@
               5/5
             </div>
           </div>
-          <div class="badge{% if level >= 4 %} badge_active{% endif %}{% if level == 4 %} badge_current{% endif %}">
-            <img src="../../static/public_rating/senior.png">
+          <div class="badge{% if level >= 4 %} badge_active{% else %} badge_disabled{% endif %}{% if level == 4 %} badge_current{% endif %}">
+            <img src="/static/senior.png">
             <div class="badge__text">
               Senior
             </div>
@@ -54,8 +54,8 @@
               7/10
             </div>
           </div>
-          <div class="badge{% if level >= 5 %} badge_active{% endif %}{% if level == 5 %} badge_current{% endif %}">
-            <img src="../../static/public_rating/teamlead.png">
+          <div class="badge{% if level >= 5 %} badge_active{% else %} badge_disabled{% endif %}{% if level == 5 %} badge_current{% endif %}">
+            <img src="/static/teamlead.png">
             <div class="badge__text">
               Team Lead
             </div>
@@ -63,8 +63,8 @@
               7/20
             </div>
           </div>
-          <div class="badge{% if level == 6 %} badge_active badge_current{% endif %}">
-            <img src="../../static/public_rating/superstar.png">
+          <div class="badge{% if level == 6 %} badge_active badge_current{% else %} badge_disabled{% endif %}">
+            <img src="/static/superstar.png">
             <div class="badge__text">
               Super Star
             </div>
