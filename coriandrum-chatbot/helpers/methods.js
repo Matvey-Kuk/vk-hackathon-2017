@@ -28,13 +28,13 @@ var handleNewMessage = function (object) {
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         // Print out the response body
-        console.log("BODY", body);
+        //console.log("BODY", body);
 
         makeRequest({
           url: urls.CRNDRM_USERS + userId,
           method: 'GET'
         }, function (error, response, body) {
-          console.log("STATUS", response.statusCode);
+          //console.log("STATUS", response.statusCode);
           if (!error && response.statusCode == 404) {
             console.log("404");
             makeRequest({
@@ -42,11 +42,11 @@ var handleNewMessage = function (object) {
               method: 'POST'
             }, function (error, response, body) {
               console.log("post body", body);
-            })
+            });
           } else {
             console.log("BODY", body);
           }
-          console.log("CRDRMMM::", body);
+          //console.log("CRDRMMM::", body);
         });
       } else {
         console.log("ERROR", error);
