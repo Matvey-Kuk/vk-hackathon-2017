@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.post('/', function(request, response) {
   var body = request.body;
 
+  console.log("msg from callback", body);
   if (body.type === 'confirmation') {
     response.send(process.env.CONFIRM_TOKEN);
   } else if (body.type === 'message_new') {
