@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 import requests
 
@@ -8,7 +10,6 @@ from django.contrib.auth.models import AbstractUser
 class CoriandrumUser(AbstractUser):
     vk_user_id = models.IntegerField(unique=True, blank=True, null=True)
     raw_vk_user_cache = models.TextField(blank=True, default="")
-    level = models.IntegerField(default=0, unique=False)
 
     def save(self, *args, **kwargs):
         if self.username == "":
@@ -30,11 +31,47 @@ class CoriandrumUser(AbstractUser):
 
     @property
     def vk_name(self):
-        return self.raw_vk_user['first_name'] + " " + self.raw_vk_user['last_name']
+        user_data = self.raw_vk_user
+        if "first_name" in user_data and "last_name" in user_data:
+            return user_data['first_name'] + " " + user_data['last_name']
+        else:
+            return None
 
     @property
     def vk_avatar(self):
-        return self.raw_vk_user['photo_200']
+        user_data = self.raw_vk_user
+        if "photo_200" in user_data:
+            return user_data['photo_200']
+        else:
+            return None
+
+    @property
+    def published_posts(self):
+        user_posts = Post.objects.filter(author__vk_user_id__contains=
+                                         self.vk_user_id)
+
+        published_posts = [p for p in user_posts if p.status == "published"]
+        return published_posts
+
+    @property
+    def n_published(self):
+        return len(self.published_posts)
+
+    @property
+    def level(self):
+        n_published = len(self.published_posts)
+        reqs = {
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 5,
+            4: 10,
+            5: 20,
+            6: 30,
+        }
+        for level in range(7)[::-1]:
+            if n_published >= reqs[level]:
+                return level
 
 
 class Achievement(models.Model):
