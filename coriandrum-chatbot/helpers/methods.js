@@ -37,7 +37,7 @@ var handleNewMessage = function (object) {
           method: 'GET'
         }, function (error, response, body) {
           if (!error && response.statusCode == 404) {
-            console.log("404");
+           // console.log("404");
 
             // if user doesn't exist, create it
             makeRequest({
@@ -47,7 +47,7 @@ var handleNewMessage = function (object) {
                 vk_user_id: userId
               }
             }, function (error, response, body) {
-              console.log("post body", body);
+             // console.log("post body", body);
               if (body && body.id) {
                 dbUserId = body.id;
               }
@@ -57,7 +57,7 @@ var handleNewMessage = function (object) {
             dbUserId = JSON.parse(body).id;
           }
 
-          console.log("dbUserId,", dbUserId);
+        //  console.log("dbUserId,", dbUserId);
 
           // send to db
           makeRequest({
@@ -71,7 +71,7 @@ var handleNewMessage = function (object) {
         });
 
       } else {
-        console.log("ERROR", error);
+       // console.log("ERROR", error);
       }
     });
 };
