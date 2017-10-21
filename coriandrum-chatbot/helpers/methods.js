@@ -58,6 +58,16 @@ var handleNewMessage = function (object) {
           }
 
           console.log("dbUserId,", dbUserId);
+
+          // send to db
+          makeRequest({
+            url: urls.CRNDRM_POST,
+            method: 'POST',
+            form: {
+              author: dbUserId,
+              text: text
+            }
+          })
         });
 
       } else {
