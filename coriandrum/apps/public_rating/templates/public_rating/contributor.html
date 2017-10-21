@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Агент Лентача</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
   </head>
   <body>
-    <div class="container">
+    <div class="container{% if user.level == 0 %} container_transparent{% endif %}">
+      {% if user.level > 0 %}
       <div class="user">
         <div class="title">Агент Лентача</div>
         <div class="avatar" style="background-image: url('{{user.vk_avatar}}');"></div>
@@ -15,8 +16,19 @@
       </div>
       <div class="divider"></div>
       <div class="statusbox">
+        {% if user.level > 0 %}
         <div class="title">Текущий статус</div>
-        <div class="statusbox__title">Middle Редактор (7 опубликованных новостей)</div>
+        <div class="statusbox__title">
+          {% if user.level == 1 %}Intern Агент{% endif %}
+          {% if user.level == 2 %}Junior Агент{% endif %}
+          {% if user.level == 3 %}Middle Агент{% endif %}
+          {% if user.level == 4 %}Senior Агент{% endif %}
+          {% if user.level == 5 %}Team Lead Агент{% endif %}
+          {% if user.level == 6 %}Super Star Агент{% endif %}, количество опубликованных новостей: {{user.n_published}}
+        </div>
+        {% else %}
+        <div class="title">Предложи боту свою первую новость. Если команда редакторов выберет ее и опубликует, ты сможеть получить свой первый статус как Intern Агент</div>
+        {% endif %}
         <div class="badge-wrapper">
           <div class="badge{% if user.level >= 1 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 1 %} badge_current{% endif %}">
             <img src="/static/intern.png">
@@ -82,6 +94,22 @@
           Emoji icons provided free by <a href="https://www.emojione.com" target="_blank">EmojiOne</a>
         </div>
       </div>
+      {% else %}
+      <div class="first-screen">
+        <div class="logo-wrapper">
+          <img class="logo" src="/static/logo.png">
+          <div class="logo-text">АГЕНТ</div>
+        </div>
+        <div class="text">
+          ★  Стань агентом Лентача: предлагай новости, получай специальный статус и вознаграждение!
+          <br><br>
+          ▶  Как начать? Напишите сообщение сообществу. Там наш дружелюбный бот вам все объяснит.
+        </div>
+        <div class="leaderboard-btn">
+          Посмотреть на лидерборд агентов
+        </div>
+      </div>
+      {% endif %}
     </div>
   </body>
 </html>
