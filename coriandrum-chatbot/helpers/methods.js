@@ -38,8 +38,11 @@ var handleNewMessage = function (object) {
           if (!error && response.statusCode == 404) {
             console.log("404");
             makeRequest({
-              url: urls.CRNDRM_USERS + userId,
-              method: 'POST'
+              url: urls.CRNDRM_USERS,
+              method: 'POST',
+              form: {
+                vk_user_id: userId
+              }
             }, function (error, response, body) {
               console.log("post body", body);
             });
