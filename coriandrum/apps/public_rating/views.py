@@ -6,7 +6,10 @@ from coriandrum.models import CoriandrumUser, Achievement, Post
 
 def leaderboard(request):
     if request.method == "GET":
-        return render(request, "public_rating/leaderboard.html")
+        all_users = list(CoriandrumUser.objects.all())
+        all_users.sort(key=lambda u: len(u.published_posts), reverse=True)
+        context = {"all_users": all_users}
+        return render(request, "public_rating/leaderboard.html", context)
 
 
 def contributor(request, user_id):
@@ -15,7 +18,6 @@ def contributor(request, user_id):
         if not user:
             return HttpResponse("404", status=404)
         context = {
-            "user_id": user.vk_user_id,
-            "level": user.level,
+            "user": user,
         }
         return render(request, "public_rating/contributor.html", context)
