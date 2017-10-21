@@ -71,38 +71,64 @@ var handleNewMessage = function (object) {
     var text = object.body;
     var attachments = object.attachments;
     var reply;
+    var dbUser;
+    var dbUserid;
 
-    reply = getReply(text);
+    //reply = getReply(text);
 
     reply += '🌚';
 
-    // reply to chat
-    replyToChat(reply, userId, function (error, response, body) {
-     // console.log(body);
-      if (!error && response.statusCode == 200) {
-        var dbUserId;
+    findUser(userId, function (error, response, body) {
+      if (!error && response.statusCode == 404) {
+        createNewUser(userId, function (error, response, body) {
+          console.log("create new user body", body);
+          if (body && body.id) {
+            dbUserId = body.id;
+            console.log("new user id", dbUserId);
+            sendToDb(dbUserId, text, attachments);
 
-        findUser(userId, function (error, response, body) {
-          if (!error && response.statusCode == 404) {
-            createNewUser(userId, function (error, response, body) {
-              console.log("create new user body", body);
-              if (body && body.id) {
-                dbUserId = body.id;
-                console.log("new user id", dbUserId);
+            // reply to chat
+            reply += ' new user';
+            replyToChat(reply, userId, function (error, response, body) {
+              if (!error && response.statusCode == 200) {
+                var dbUserId;
+                console.log("bot success");
+              } else {
+                console.log("bot error", error);
               }
             });
-          } else {
-            //console.log("EXISTING USER", JSON.parse(body).id);
-            dbUserId = JSON.parse(body).id;
           }
-
-          //console.log("dbuserid", dbUserId);
-          sendToDb(dbUserId, text, attachments);
         });
       } else {
-       // console.log("ERROR", error);
+        console.log("EXISTING USER", JSON.parse(body).id);
+        dbUser = JSON.parse(body);
+        dbUserId = dbUser.id;
+
+        console.log("parse", dbUser);
+        reply += 'hello, ' + dbUser.vk_name ;
+
+
+        //console.log("dbuserid", dbUserId);
+        sendToDb(dbUserId, text, attachments);
+
+        // reply to chat
+        replyToChat(reply, userId, function (error, response, body) {
+         // console.log(body);
+          if (!error && response.statusCode == 200) {
+            var dbUserId;
+            console.log("bot success");
+          } else {
+            console.log("bot error", error);
+          }
+        });
       }
+
     });
+
+
+
+
+
 };
 
 module.exports = {
