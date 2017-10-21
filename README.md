@@ -9,5 +9,5 @@ docker push motakukk/vk-hack-2017:latest
 On server:
 
 ```
-docker pull motakukk/vk-hack-2017:latest && docker service update --image motakukk/vk-hack-2017:latest bck
+docker service update --image motakukk/vk-hack-2017:5 bck
 ```

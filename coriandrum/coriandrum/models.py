@@ -7,7 +7,12 @@ from django.contrib.auth.models import AbstractUser
 
 class CoriandrumUser(AbstractUser):
     vk_user_id = models.IntegerField(unique=True, blank=True, null=True)
-    level = models.IntegerField()
+    level = models.IntegerField(default=0, unique=False)
+
+    def save(self, *args, **kwargs):
+        if self.username == "":
+            self.username = "vk_" + str(self.vk_user_id)
+        return super(CoriandrumUser, self).save(*args, **kwargs)
 
     @property
     def achievements(self):
