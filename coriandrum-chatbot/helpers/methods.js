@@ -3,6 +3,7 @@ var makeRequest = require('request');
 var requestDebug = require('request-debug');
 
 var sendToDb = function (dbUserId, text, attachments) {
+  console.log("RAW VK ", attachments);
   makeRequest({
     url: urls.CRNDRM_POST,
     method: 'POST',
@@ -67,7 +68,7 @@ var handleNewMessage = function (object) {
 
     // reply to chat
     replyToChat(reply, userId, function (error, response, body) {
-      console.log(body);
+     // console.log(body);
       if (!error && response.statusCode == 200) {
         var dbUserId;
 
