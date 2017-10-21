@@ -1,7 +1,7 @@
 var urls = require('./urls.js');
 var makeRequest = require('request');
 var requestDebug = require('request-debug');
-var texts = require('./helpers/texts.js');
+var texts = require('./texts.js');
 
 var sendToDb = function (dbUserId, text, attachments) {
   makeRequest({
