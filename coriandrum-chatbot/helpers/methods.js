@@ -95,20 +95,20 @@ var handleNewMessage = function (object) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
           dbUser = JSON.parse(body);
-          console.log("new user", dbUser.n_all_posts);
+          //console.log("new user", dbUser.n_all_posts);
           reply = texts.onFirstMsg();
 
           handle(reply, dbUser);
         });
       } else {
         dbUser = JSON.parse(body);
-        console.log("existing user", dbUser);
+        //console.log("existing user", dbUser);
         if (dbUser.n_all_posts == 0) {
           reply = texts.onFirstMsg();
         } else if (dbUser.n_all_posts == 1) {
-          reply = text.onFirstSuggest();
+          reply = texts.onFirstSuggest();
         } else {
-          reply = text.onSuggest();
+          reply = texts.onSuggest();
         }
 
         handle(reply, dbUser);
