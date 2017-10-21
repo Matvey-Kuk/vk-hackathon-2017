@@ -61,7 +61,7 @@ var handleNewMessage = function (object) {
         'user_id': userId
       }
     }, function (error, response, body) {
-      console.log(error, response, body);
+      console.log(body);
       if (!error && response.statusCode == 200) {
 
         var dbUserId;
