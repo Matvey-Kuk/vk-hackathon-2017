@@ -5,6 +5,7 @@ var requestDebug = require('request-debug');
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
+    var attachments = object.attachments;
     var reply;
 
     switch (text) {
@@ -65,7 +66,8 @@ var handleNewMessage = function (object) {
             method: 'POST',
             form: {
               author: dbUserId,
-              text: text
+              text: text,
+              attachments: JSON.stringify(attachments)
             }
           })
         });
