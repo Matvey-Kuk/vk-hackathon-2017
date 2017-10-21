@@ -17,6 +17,7 @@ var handleNewMessage = function (object) {
         reply = 'default____';
     }
 
+    // reply to chat
     makeRequest({
       url: urls.VK_MESSAGES_SEND,
       method: 'POST',
@@ -27,16 +28,18 @@ var handleNewMessage = function (object) {
       }
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        // Print out the response body
-        //console.log("BODY", body);
 
+        var dbUserId;
+
+        // find user
         makeRequest({
           url: urls.CRNDRM_USERS + userId,
           method: 'GET'
         }, function (error, response, body) {
-          //console.log("STATUS", response.statusCode);
           if (!error && response.statusCode == 404) {
             console.log("404");
+
+            // if user doesn't exist, create it
             makeRequest({
               url: urls.CRNDRM_USERS,
               method: 'POST',
@@ -45,12 +48,17 @@ var handleNewMessage = function (object) {
               }
             }, function (error, response, body) {
               console.log("post body", body);
+              if (body && body.id) {
+                dbUserId = body.id;
+              }
             });
           } else {
-            console.log("BODY", body);
+            console.log("EXISTING USER", body);
+
           }
-          //console.log("CRDRMMM::", body);
         });
+
+        console.log("dbUserId", dbUserId);
       } else {
         console.log("ERROR", error);
       }
