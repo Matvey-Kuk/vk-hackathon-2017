@@ -4,7 +4,7 @@ var requestDebug = require('request-debug');
 
 requestDebug(makeRequest);
 
-console.log("PROCESS.ENV", process.env);
+console.log("PROCESS.ENV", process.env.API_KEY);
 
 var get = function (callback) {
   makeRequest({
