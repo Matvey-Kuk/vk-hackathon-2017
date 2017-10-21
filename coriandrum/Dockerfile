@@ -9,9 +9,6 @@ RUN apt-get update && \
 	ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib && \
 	ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
 
-RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
-RUN sudo apt-get install -y nodejs
-
 # Encoding fix for correct UTF handling in python packages
 
 RUN sudo locale-gen "en_US.UTF-8"
@@ -29,21 +26,18 @@ ENV LC_MEASUREMENT "en_US.UTF-8"
 ENV LC_IDENTIFICATION "en_US.UTF-8"
 RUN locale
 
-# Node packages installation
-
-RUN npm install -g jslint
-
 # Python packages installation
 
 COPY requirements.txt /opt/app/requirements.txt
-COPY requirements-develop.txt /opt/app/requirements-develop.txt
+
+RUN pip3 install uwsgi
 RUN pip3 install -r /opt/app/requirements.txt
 
 # Copying application code into container
 
 COPY . /opt/app
 
-VOLUME ["/opt/app/media"]
+VOLUME ["/opt/media"]
 
 WORKDIR /opt/app
 
@@ -51,13 +45,8 @@ WORKDIR /opt/app
 
 RUN if [ ! -f secret_key.txt ]; then openssl rand -base64 32 > secret_key.txt; fi
 
-# Collecting static files
+CMD python3 manage.py collectstatic --noinput
 
-RUN python3 /opt/app/manage.py collectstatic --settings=coriandrum.settings --noinput
-
-# Nginx setup
-
-RUN rm /etc/nginx/sites-enabled/default;
-RUN ln -s /opt/app/Deploy/nginx.conf /etc/nginx/sites-enabled/;
+CMD python3 manage.py migrate --noinput && uwsgi --ini=uwsgi.ini
 
 EXPOSE 80
