@@ -7,7 +7,7 @@ requestDebug(makeRequest);
 var get = function (callback) {
   makeRequest({
     url: 'https://api.heroku.com/apps/coriandrum-chatbot/config-vars',
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Accept': 'application/vnd.heroku+json; version=3'
     }
