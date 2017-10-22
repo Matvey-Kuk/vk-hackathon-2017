@@ -35,7 +35,7 @@ app.post('/update', function (request, response) {
   } else if (body.type === 'trashed') {
     reply = texts.onTrashFail();
   } else if (body.type === 'almost_published') {
-    reply = texts.onAlmostPublish();
+    reply = texts.onAlmostPublished();
   } else if (body.type === 'published') {
     if (body.new_level_achieved) {
       reply = texts.onPublishAndAchieve(body.publications);
