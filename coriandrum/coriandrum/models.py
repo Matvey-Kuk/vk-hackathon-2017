@@ -62,7 +62,7 @@ class CoriandrumUser(AbstractUser):
     @property
     def published_posts(self):
         published_posts = ([p for p in self.all_posts
-                           if p.status == "published"])
+                            if p.status == "published"])
         return published_posts
 
     @property
@@ -138,6 +138,27 @@ class Post(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        payload = {}
+        if self.pk is None:
+            payload = {
+                "type": "new_post",
+                "vk_user_id": self.author.vk_user_id
+            }
+        else:
+            old_model = Post.objects.get(pk=self.pk)
+            print(old_model.status)
+            print(self.status)
+            payload = {
+                "type": "new_post",
+                "vk_user_id": self.author.vk_user_id
+            }
+
+        print(requests.post(
+            "https://coriandrum-chatbot.herokuapp.com/update",
+            data=json.dumps(payload),
+            headers={'content-type': 'application/json'}
+        ).text)
+
         super(Post, self).save(force_insert=False, force_update=False,
                                using=None, update_fields=None)
 
