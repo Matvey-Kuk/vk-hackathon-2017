@@ -109,6 +109,7 @@ class Post(models.Model):
     STATUS_LOOKS_INTERESTING = 'looks_interesting'
     STATUS_TRASH = 'trash'
     STATUS_PUBLISHED = 'published'
+    STATUS_INVALID = 'invalid'
 
     STATUS_CHOICES = (
         (STATUS_NEW, 'Новый пост'),
@@ -116,6 +117,7 @@ class Post(models.Model):
         (STATUS_LOOKS_INTERESTING, 'Понравился редактору'),
         (STATUS_TRASH, 'В топке'),
         (STATUS_PUBLISHED, 'Опубликован'),
+        (STATUS_INVALID, 'Не валиден'),
     )
 
     raw_vk_attachments_payload = models.TextField(default="")
@@ -126,12 +128,16 @@ class Post(models.Model):
         default=STATUS_NEW,
     )
 
+    in_consideration_by_moderator = models.ForeignKey(
+        CoriandrumUser, on_delete=models.CASCADE, null=True, blank=True,
+        related_name="is_considered_by"
+    )
+
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.TextField(null=True, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        print(self.raw_vk_attachments_payload)
         super(Post, self).save(force_insert=False, force_update=False,
                                using=None, update_fields=None)
 

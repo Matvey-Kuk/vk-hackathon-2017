@@ -9,14 +9,49 @@
 </head>
 <body>
 
+{% endverbatim %}
+{% csrf_token %}
+<input type="hidden" name="userid" value="{{ user.id }}">
+{% verbatim %}
+
 <div id="app">
+
+    Новые (Общая куча):
     <ol>
-        <li v-for="post in posts">
+        <li v-for="post in posts['new']">
             Id: {{ post.id }} <br>
             Author: {{ post.author }} <br>
             Text: {{ post.text }} <br>
             Status: {{ post.status }} <br>
-            <button v-on:click="movePost(post.id, 'on_consideration')">Say hi</button>
+            <button v-on:click="movePost(post.id, 'in_consideration')">На осознание</button>
+            <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
+            <button v-on:click="movePost(post.id, 'looks_interesting')">На публикацию</button>
+        </li>
+    </ol>
+
+    На осознании (Ваша личная куча):
+    <ol>
+        <li v-for="post in posts['in_consideration']">
+            Id: {{ post.id }} <br>
+            Author: {{ post.author }} <br>
+            Text: {{ post.text }} <br>
+            Status: {{ post.status }} <br>
+            <button v-on:click="movePost(post.id, 'new')">Обратно в новые</button>
+            <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
+            <button v-on:click="movePost(post.id, 'looks_interesting')">На публикацию</button>
+        </li>
+    </ol>
+
+    Готовы к публикации (Общая куча):
+    <ol>
+        <li v-for="post in posts['looks_interesting']">
+            Id: {{ post.id }} <br>
+            Author: {{ post.author }} <br>
+            Text: {{ post.text }} <br>
+            Status: {{ post.status }} <br>
+            <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
+            <button v-on:click="movePost(post.id, 'in_consideration')">Обратно на осознание</button>
+            <button v-on:click="movePost(post.id, 'published')">Опубликовано (обрадовать автора)</button>
         </li>
     </ol>
 </div>
@@ -24,35 +59,52 @@
 <script>
 
     Vue.http.interceptors.push(function(request, next) {
-
-        // modify headers
         request.headers.set('Content-Type', 'application/json ');
-
-        // continue to next interceptor
+        request.headers.set("X-CSRFToken", document.getElementsByName('csrfmiddlewaretoken')[0].value);
         next();
     });
+
+    var in_consideration_by_moderator = document.getElementsByName('userid')[0].value;
 
     var app = new Vue({
         el: '#app',
         data: {
-            posts: []
+            posts: {
+                "new": [],
+                "in_consideration": [],
+                "looks_interesting": []
+            }
         },
         methods: {
-            loadList: function() {
-                this.$http.get('/api/post/', {})
+            loadList: function(post_type) {
+
+                var params = {
+                    status: post_type
+                };
+
+                if (post_type === "in_consideration") {
+                    params['in_consideration_by_moderator'] = in_consideration_by_moderator
+                }
+
+                this.$http.get('/api/post/', {
+                    params: params
+                })
                     .then(function(response) {
-                        this.posts = response.body;
+                        this.posts[post_type] = response.body;
                     })
                     .catch(function(error) {
                         console.log(error);
                     });
             },
-            movePost: function(post_id, type) {
+            movePost: function(post_id, new_status) {
                 this.$http.put('/api/post/' + post_id + "/", {
-                    text: "I'm frontend"
+                    status: new_status,
+                    in_consideration_by_moderator: in_consideration_by_moderator
                 })
                     .then(function(response) {
-                        this.loadList();
+                        this.loadList("new");
+                        this.loadList("in_consideration");
+                        this.loadList("looks_interesting");
                     })
                     .catch(function(error) {
                         console.log(error);
@@ -60,10 +112,14 @@
             }
         },
         created: function(){
-            this.loadList();
+            this.loadList("new");
+            this.loadList("in_consideration");
+            this.loadList("looks_interesting");
 
             setInterval(function () {
-                this.loadList();
+                this.loadList("new");
+                this.loadList("in_consideration");
+                this.loadList("looks_interesting");
             }.bind(this), 3000);
         }
     })
