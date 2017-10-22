@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 app.post('/', function (request, response) {
   var body = request.body;
+  console.log(body);
 
   if (body.type === 'confirmation') {
     response.send(process.env.CONFIRM_TOKEN);
