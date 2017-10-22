@@ -10,9 +10,13 @@ body {
 
 .container {
   background-color: #fff;
-  padding: 50px;
+  padding: 40px;
   max-width: 640px;
   margin: 0 auto;
+}
+
+.container_transparent {
+  background-color: transparent;
 }
 
 .header {
@@ -63,8 +67,12 @@ body {
   padding-bottom: 20px;
 }
 
+.badge-wrapper {
+  font-size: 0px;
+}
+
 .badge {
-  width: 100px;
+  width: 16.66%;
   display: inline-block;
   vertical-align: middle;
   text-align: center;
@@ -106,12 +114,174 @@ body {
   padding: 7px 16px 8px;
   line-height: 15px;
   border-radius: 2px;
+  cursor: pointer;
+}
+
+.statusbox__share-btn:hover {
+  background-color: #7697bf;
 }
 
 .footer {
   margin-top: 60px;
 }
 
-.attribution {
+.attribution, .attribution a {
   font-size: 12px;
+  color: #ccc;
+}
+
+.logo-wrapper {
+  display: table;
+  border: 4px solid #fff;
+  padding: 10px 15px;
+}
+
+.logo {
+  display: table-cell;
+  max-width: 40px;
+  vertical-align: middle;
+}
+
+.logo-text {
+  display: table-cell;
+  color: #fff;
+  vertical-align: middle;
+  font-family: roboto condensed;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  padding-left: 20px;
+}
+
+.first-screen .text {
+  color: #fff;
+  font-weight: 300;
+  padding-top: 50px;
+}
+
+.leaderboard-btn {
+  margin-top: 30px;
+  background: #fff;
+  color: #793B5E;
+  display: table;
+  font-size: 12.5px;
+  padding: 7px 16px 8px;
+  line-height: 15px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.leaderboard-btn:hover {
+  background: #efefef;
+}
+
+.user-item-wrapper {
+  font-size: 0px;
+  margin-top: 30px;
+}
+
+.user-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.user-item__avatar {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.user-item__name {
+  margin-top: 10px;
+}
+
+.user-item__posts-num {
+  margin-top: 5px;
+}
+
+.user-item__name, .user-item__posts-num {
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.8;
+  line-height: 1;
+}
+
+.user-item__level {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.user-item__level img {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    padding: 20px;
+  }
+
+  .user {
+    margin-bottom: 15px;
+  }
+
+  .statusbox {
+    margin-top: 15px;
+  }
+
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .statusbox__title, .name {
+    font-size: 16px;
+  }
+
+  .badge {
+    width: 33.33%;
+    padding-bottom: 20px;
+  }
+
+  .badge_active:not(.badge_current) img {
+    transform: scale(0.6);
+  }
+
+  .first-screen .text {
+    padding-top: 20px;
+  }
+
+  .statusbox__share-btn {
+    margin: 20px auto 0;
+  }
+
+  .attribution {
+    text-align: center;
+  }
+
+  .user-item {
+    width: 25%;
+    padding: 10px;
+  }
+
+  .user-item__name {
+    margin-top: 8px;
+  }
+
+  .user-item__posts-num {
+    margin-top: 3px;
+  }
+
+  .user-item__name, .user-item__posts-num {
+    font-size: 10px;
+  }
 }

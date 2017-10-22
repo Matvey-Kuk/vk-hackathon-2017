@@ -50,22 +50,6 @@ var replyToChat = function (reply, userId, callback) {
   });
 };
 
-var getReply = function (text) {
-  var reply;
-
-  switch (text) {
-    case '1':
-      console.log('1');
-      reply = '1111';
-      break;
-    default:
-      console.log('default');
-      reply = 'default';
-  }
-
-  return reply;
-};
-
 var handleNewMessage = function (object) {
     var userId = object.user_id;
     var text = object.body;
@@ -76,75 +60,45 @@ var handleNewMessage = function (object) {
 
 
     var handle = function (reply, dbUser) {
-        dbUserId = dbUser.id;
+      if (!dbUser || !dbUser.id) {
+        return;
+      }
 
-        if (!dbUser || !dbUserId) {
-          return;
+      sendToDb(dbUser.id, text, attachments);
+
+      replyToChat(reply, userId, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log("bot success");
+        } else {
+          console.log("bot error", error);
         }
-
-        sendToDb(dbUserId, text, attachments);
-
-        replyToChat(reply, userId, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-            console.log("bot success");
-          } else {
-            console.log("bot error", error);
-          }
-        });
+      });
     };
 
     findUser(userId, function (error, response, body) {
       if (!error && response.statusCode == 404) {
         createNewUser(userId, function (error, response, body) {
-          reply += ' new user';
+          dbUser = JSON.parse(body);
+          //console.log("new user", dbUser.n_all_posts);
+          reply = texts.onFirstMsg();
 
-          handle(reply, JSON.parse(body));
-
-          // dbUser = JSON.parse(body);
-          // dbUserId = dbUser.id;
-
-          // if (!dbUser || !dbUserId) {
-          //   return;
-          // }
-
-          // sendToDb(dbUserId, text, attachments);
-
-          // replyToChat(reply, userId, function (error, response, body) {
-          //   if (!error && response.statusCode == 200) {
-          //     console.log("bot success");
-          //   } else {
-          //     console.log("bot error", error);
-          //   }
-          // });
+          handle(reply, dbUser);
         });
       } else {
-        reply += 'hello, ' + dbUser.vk_name;
+        dbUser = JSON.parse(body);
+        //console.log("existing user", dbUser);
+        if (dbUser.n_all_posts == 0) {
+          reply = texts.onFirstMsg();
+        } else if (dbUser.n_all_posts == 1) {
+          reply = texts.onFirstSuggest();
+        } else {
+          reply = texts.onSuggest();
+        }
 
-        handle(reply, JSON.parse(body));
-
-        // dbUser = JSON.parse(body);
-        // dbUserId = dbUser.id;
-
-        // if (!dbUser || !dbUserId) {
-        //   return;
-        // }
-
-        // sendToDb(dbUserId, text, attachments);
-
-        // replyToChat(reply, userId, function (error, response, body) {
-        //   if (!error && response.statusCode == 200) {
-        //     console.log("bot success");
-        //   } else {
-        //     console.log("bot error", error);
-        //   }
-        // });
+        handle(reply, dbUser);
       }
 
     });
-
-
-
-
 
 };
 

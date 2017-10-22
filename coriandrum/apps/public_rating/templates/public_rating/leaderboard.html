@@ -2,17 +2,35 @@
 <html>
     <head>
         <title>Leaderboard</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700,900" rel="stylesheet">
+        <link rel="stylesheet" href="/static/styles.css">
     </head>
-
     <body>
-        <h1>Leaderboard</h1>
-        {% for user in all_users %}
-            <h1>===============</h1>
-            <h1>vk_user_id = {{user.vk_user_id}}</h1>
-            <h1>name = {{user.vk_name}}</h1>
-            <h1>level = {{user.level}}</h1>
-            <h1>published posts = {{user.n_published}}</h1>
-            <h1>avatar = {{user.vk_avatar}}</h1>
-        {% endfor %}
+      <div class="container container_transparent">
+        <div class="logo-wrapper">
+          <img class="logo" src="/static/logo.png">
+          <div class="logo-text">АГЕНТ</div>
+        </div>
+        <div class="user-item-wrapper">
+          {% for user in all_users %}
+          {% if user.level > 0 %}
+          <div class="user-item">
+            <div class="user-item__avatar" style="background-image:url({% if user.vk_avatar == none %}'/static/cat.png'{% else %}'{{user.vk_avatar}}'{% endif %});">
+              <div class="user-item__level">
+                {% if user.level == 1 %}<img src="/static/intern.png">{% endif %}
+                {% if user.level == 2 %}<img src="/static/junior.png">{% endif %}
+                {% if user.level == 3 %}<img src="/static/middle.png">{% endif %}
+                {% if user.level == 4 %}<img src="/static/senior.png">{% endif %}
+                {% if user.level == 5 %}<img src="/static/teamlead.png">{% endif %}
+                {% if user.level == 6 %}<img src="/static/superstar.png">{% endif %}
+              </div>
+            </div>
+            <div class="user-item__name">{{user.vk_name}}</div>
+            <div class="user-item__posts-num">Опубликовано: {{user.n_published}}</div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
     </body>
 </html>
