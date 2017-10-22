@@ -1,6 +1,4 @@
-var $shareBtn = $("#share-btn");
 $(document).ready(function () {
-  $shareBtn.on('click', function () {
-    location.replace('http://vk.com/share.php?url=' + window.location.href);
-  })
+  var $shareBtn = $("#share-btn");
+  $shareBtn.attr('href', 'http://vk.com/share.php?url=' + window.location.href);
 });
