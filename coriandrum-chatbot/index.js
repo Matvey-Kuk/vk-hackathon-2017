@@ -24,6 +24,7 @@ app.post('/', function (request, response) {
 
 app.post('/update', function (request, response) {
   console.log(request, response);
+  response.send('ok');
 });
 
 app.listen(app.get('port'), function () {
