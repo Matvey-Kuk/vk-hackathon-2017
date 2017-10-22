@@ -43,6 +43,7 @@ app.use(bodyParser.json());
 
 
 app.post('/', function (request, response) {
+  console.log(request, response);
   var body = request.body;
   console.log(body);
 
