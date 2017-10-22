@@ -26,7 +26,7 @@
           {% if user.level == 6 %}Super Star Агент{% endif %}, количество опубликованных новостей: {{user.n_published}}
         </div>
         {% else %}
-        <div class="title">Предложи боту свою первую новость. Если команда редакторов выберет ее и опубликует, ты сможеть получить свой первый статус как Intern Агент</div>
+        <div class="title">Спасибо за предложенные новости. Пока ни одна новость не была опубликована.</div>
         {% endif %}
         <div class="badge-wrapper">
           <div class="badge{% if user.level >= 1 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 1 %} badge_current{% endif %}">
@@ -35,7 +35,7 @@
               Intern
             </div>
             <div class="badge__num">
-              1/1
+              {{user.n_published}}/1
             </div>
           </div>
           <div class="badge{% if user.level >= 2 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 2 %} badge_current{% endif %}">
@@ -44,7 +44,7 @@
               Junior
             </div>
             <div class="badge__text">
-              2/2
+              {{user.n_published}}/2
             </div>
           </div>
           <div class="badge{% if user.level >= 3 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 3 %} badge_current{% endif %}">
@@ -53,7 +53,7 @@
               Middle
             </div>
             <div class="badge__text">
-              5/5
+              {{user.n_published}}/5
             </div>
           </div>
           <div class="badge{% if user.level >= 4 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 4 %} badge_current{% endif %}">
@@ -62,7 +62,7 @@
               Senior
             </div>
             <div class="badge__text">
-              7/10
+              {{user.n_published}}/10
             </div>
           </div>
           <div class="badge{% if user.level >= 5 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 5 %} badge_current{% endif %}">
@@ -71,7 +71,7 @@
               Team Lead
             </div>
             <div class="badge__text">
-              7/20
+              {{user.n_published}}/20
             </div>
           </div>
           <div class="badge{% if user.level == 6 %} badge_active badge_current{% else %} badge_disabled{% endif %}">
@@ -80,7 +80,7 @@
               Super Star
             </div>
             <div class="badge__text">
-              7/30
+              {{user.n_published}}/30
             </div>
           </div>
         </div>

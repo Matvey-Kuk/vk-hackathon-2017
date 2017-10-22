@@ -226,6 +226,13 @@ body {
   max-width: 100%;
 }
 
+/* admin panel */
+.list-item {
+  background: #efefef;
+  padding: 10px;
+  border-radius: 2px;
+}
+
 @media screen and (max-width: 640px) {
   .container {
     padding: 20px;
