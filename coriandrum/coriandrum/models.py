@@ -120,7 +120,7 @@ class Post(models.Model):
         (STATUS_INVALID, 'Не валиден'),
     )
 
-    raw_vk_attachments_payload = models.TextField(default="")
+    raw_vk_attachments_payload = models.TextField(default="", null=True, blank=True)
 
     status = models.CharField(
         max_length=25,
