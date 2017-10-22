@@ -140,6 +140,22 @@ class Post(models.Model):
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
 
+    @property
+    def images(self):
+        ims = []
+
+        try:
+            if not self.raw_vk_attachments_payload == "":
+                print(json.loads(self.raw_vk_attachments_payload.replace('\\', ''))[0])
+                for inst in json.loads(self.raw_vk_attachments_payload.replace('\\', '')):
+                    if inst['type'] == "photo":
+                        if "photo_1280" in inst['photo']:
+                            ims.append(inst['photo']['photo_1280'])
+        except TypeError:
+            pass
+
+        return ims
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         payload = {}

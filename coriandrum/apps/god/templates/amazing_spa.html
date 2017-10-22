@@ -109,10 +109,6 @@
                     });
             },
             movePost: function(post_id, new_status) {
-<<<<<<< HEAD
-=======
-
->>>>>>> b66c60dff7fa0948b9e2d403fb52fed310a1b9b6
                 this.$http.put('/api/post/' + post_id + "/", {
                     status: new_status,
                     in_consideration_by_moderator: document.getElementsByName('userid')[0].value
