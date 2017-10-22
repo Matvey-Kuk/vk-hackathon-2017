@@ -108,6 +108,19 @@ body {
   font-weight: 500;
 }
 
+.statusbox__btn {
+  float: left;
+  margin-right: 30px;
+}
+
+.statusbox__btn a {
+  text-decoration: none;
+}
+
+.clear {
+  clear: both;
+}
+
 .statusbox__share-btn {
   margin-top: 30px;
   background: #6481A4;

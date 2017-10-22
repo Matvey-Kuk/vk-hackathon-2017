@@ -84,18 +84,19 @@
             </div>
           </div>
         </div>
-        <a id="share-btn">
+        <a id="share-btn" class="statusbox__btn">
           <div class="statusbox__share-btn">
-            Поделиться статусом с друзьями
+            Похвастаться
           </div>
         </a>
-        <a href="/leaderboard">
+        <a href="/leaderboard" class="statusbox__btn">
           <div class="statusbox__share-btn">
             Просмотреть лидерборд агентов
           </div>
         </a>
+        <div class="clear"></div>
         {% if '/admin' in request.path %}
-        <a href="/god/">
+        <a href="/god/" class="statusbox__btn">
           <div class="statusbox__share-btn">
             Перейти в интерфейс администратора
           </div>
