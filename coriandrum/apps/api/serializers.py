@@ -25,7 +25,8 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'author', 'text', 'status',
-                  'raw_vk_attachments_payload', 'in_consideration_by_moderator')
+                  'raw_vk_attachments_payload', 'in_consideration_by_moderator',
+                  'images')
 
 
 class PostAttachmentSerializer(serializers.HyperlinkedModelSerializer):
