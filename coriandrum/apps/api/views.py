@@ -1,8 +1,12 @@
 from rest_framework import viewsets
+import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 from coriandrum.models import CoriandrumUser, Post, PostAttachment
 
-from .serializers import CoriandrumUserSerializer, PostSerializer, PostAttachmentSerializer
+from .serializers import CoriandrumUserSerializer, PostSerializer, \
+    PostAttachmentSerializer
 
 
 class CoriandrumUserViewSet(viewsets.ModelViewSet):
@@ -14,6 +18,9 @@ class CoriandrumUserViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    filter_fields = ('status', 'in_consideration_by_moderator')
+    filter_backends = (DjangoFilterBackend,)
 
 
 class PostAttachmentViewSet(viewsets.ModelViewSet):
