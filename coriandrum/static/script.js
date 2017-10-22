@@ -1,2 +1,6 @@
-console.log("test", window, document);
-console.log("window.location.href", window.location.href);
+var $shareBtn = $("#share-btn");
+$(document).ready(function () {
+  $shareBtn.on('click', function () {
+    location.replace('http://vk.com/share.php?url=' + window.location.href);
+  })
+});
