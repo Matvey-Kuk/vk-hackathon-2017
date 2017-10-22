@@ -23,7 +23,7 @@ app.post('/', function (request, response) {
 });
 
 app.post('/update', function (request, response) {
-  console.log(request, response);
+  console.log(request.body);
   response.send('ok');
 });
 
