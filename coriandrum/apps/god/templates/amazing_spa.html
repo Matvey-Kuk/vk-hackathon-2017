@@ -21,8 +21,8 @@
     Предложения от агентов
   </div>
   <div class="tab-wrapper">
-    <div href="#posts_new" class="tab tab_active">Новые (Общая куча):</div>
-    <div href="#posts_in-work" class="tab">На осознании:</div>
+    <div href="#posts_new" class="tab tab_active">Новые:</div>
+    <div href="#posts_in-work" class="tab">На осознании (личная куча):</div>
     <div href="#posts_approved" class="tab">Готовы к публикации:</div>
   </div>
   <div class="posts posts_new posts_visible" id="posts_new">
@@ -33,6 +33,9 @@
         </div>
         <div class="list-item__text">
           Текст новости: {{ post.text }} <br>
+            <div v-for="ims in post.images">
+                <img style="width:250px;" v-bind:src="ims">
+            </div>
         </div>
         <button v-on:click="movePost(post.id, 'in_consideration')">На осознание</button>
         <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
@@ -49,7 +52,7 @@
         <div class="list-item__text">
           Текст новости: {{ post.text }} <br>
         </div>
-        <button v-on:click="movePost(post.id, 'in_consideration')">На осознание</button>
+        <button v-on:click="movePost(post.id, 'new')">Обратно в новые</button>
         <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
         <button v-on:click="movePost(post.id, 'looks_interesting')">На публикацию</button>
       </div>
