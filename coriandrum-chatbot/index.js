@@ -44,9 +44,11 @@ app.post('/update', function (request, response) {
     }
   }
 
-  methods.replyToChat(reply, body.vk_user_id, function () {
-    console.log('success');
-  });
+  if (reply) {
+    methods.replyToChat(reply, body.vk_user_id, function () {
+      console.log('success');
+    });
+  }
   response.send('ok');
 });
 
