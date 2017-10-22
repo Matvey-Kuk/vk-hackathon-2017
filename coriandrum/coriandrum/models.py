@@ -69,9 +69,8 @@ class CoriandrumUser(AbstractUser):
     def n_published(self):
         return len(self.published_posts)
 
-    @property
-    def level(self):
-        n_published = len(self.published_posts)
+    @staticmethod
+    def get_level_by_publication_n(n_published):
         reqs = {
             0: 0,
             1: 1,
@@ -84,6 +83,11 @@ class CoriandrumUser(AbstractUser):
         for level in range(7)[::-1]:
             if n_published >= reqs[level]:
                 return level
+
+    @property
+    def level(self):
+        n_published = len(self.published_posts)
+        return CoriandrumUser.get_level_by_publication_n(n_published)
 
     @property
     def recently_leveled_up(self):
@@ -148,10 +152,34 @@ class Post(models.Model):
             old_model = Post.objects.get(pk=self.pk)
             print(old_model.status)
             print(self.status)
-            payload = {
-                "type": "new_post",
-                "vk_user_id": self.author.vk_user_id
-            }
+            if not old_model.status == self.status and self.status == Post.STATUS_IN_CONSIDERATION:
+                payload = {
+                    "type": "someone_considered",
+                    "vk_user_id": self.author.vk_user_id
+                }
+            elif not old_model.status == self.status and self.status == Post.STATUS_INVALID:
+                payload = {
+                    "type": "invalid",
+                    "vk_user_id": self.author.vk_user_id
+                }
+            elif not old_model.status == self.status and self.status == Post.STATUS_TRASH:
+                payload = {
+                    "type": "trashed",
+                    "vk_user_id": self.author.vk_user_id
+                }
+            elif not old_model.status == self.status and self.status == Post.STATUS_LOOKS_INTERESTING:
+                payload = {
+                    "type": "almost_published",
+                    "vk_user_id": self.author.vk_user_id
+                }
+            elif not old_model.status == self.status and self.status == Post.STATUS_PUBLISHED:
+                payload = {
+                    "type": "published",
+                    "publications": self.author.n_published,
+                    "level": CoriandrumUser.get_level_by_publication_n(self.author.n_published),
+                    "new_level_achieved": not CoriandrumUser.get_level_by_publication_n(self.author.n_published + 1) == CoriandrumUser.get_level_by_publication_n(self.author.n_published),
+                    "vk_user_id": self.author.vk_user_id
+                }
 
         print(requests.post(
             "https://coriandrum-chatbot.herokuapp.com/update",
