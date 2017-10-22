@@ -346,4 +346,8 @@ body {
   .user-item__name, .user-item__posts-num {
     font-size: 10px;
   }
+
+  #share-btn {
+    display: none;
+  }
 }
