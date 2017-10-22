@@ -25,11 +25,16 @@ app.post('/', function (request, response) {
 app.post('/update', function (request, response) {
   console.log(request.body);
   var body = request.body;
+  var reply;
   if (body.type === 'new_post') {
-    methods.replyToChat('new post send', body.vk_user_id, function () {
-      console.log('success');
-    });
+    reply = 'new post send';
+  } else if (body.type === 'someone_considered') {
+    reply = texts.onConsider();
   }
+
+  methods.replyToChat(reply, body.vk_user_id, function () {
+    console.log('success');
+  });
   response.send('ok');
 });
 
