@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from coriandrum.models import CoriandrumUser, Achievement, Post
 
@@ -11,6 +11,10 @@ def leaderboard(request):
         context = {"all_users": all_users}
         return render(request, "public_rating/leaderboard.html", context)
 
+def entry(request):
+    if request.method == "GET":
+        vk_user_id = request.GET.get("viewer_id", "")
+        return HttpResponseRedirect("/contributor/" + vk_user_id)
 
 def contributor(request, user_id):
     if request.method == "GET":
