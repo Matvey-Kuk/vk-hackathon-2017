@@ -177,9 +177,11 @@ class Post(models.Model):
                     "type": "published",
                     "publications": self.author.n_published,
                     "level": CoriandrumUser.get_level_by_publication_n(self.author.n_published),
-                    "new_level_achieved": not CoriandrumUser.get_level_by_publication_n(self.author.n_published + 1) == CoriandrumUser.get_level_by_publication_n(self.author.n_published),
+                    "new_level_achieved": not CoriandrumUser.get_level_by_publication_n(self.author.n_published - 1) == CoriandrumUser.get_level_by_publication_n(self.author.n_published),
                     "vk_user_id": self.author.vk_user_id
                 }
+
+        print(payload)
 
         print(requests.post(
             "https://coriandrum-chatbot.herokuapp.com/update",
