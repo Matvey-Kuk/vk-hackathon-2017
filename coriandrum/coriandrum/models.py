@@ -151,6 +151,8 @@ class Post(models.Model):
                     if inst['type'] == "photo":
                         if "photo_1280" in inst['photo']:
                             ims.append(inst['photo']['photo_1280'])
+                        elif "photo_130" in inst['photo']:
+                            ims.append(inst['photo']['photo_130'])
         except TypeError:
             pass
 
@@ -166,8 +168,6 @@ class Post(models.Model):
             }
         else:
             old_model = Post.objects.get(pk=self.pk)
-            print(old_model.status)
-            print(self.status)
             if not old_model.status == self.status and self.status == Post.STATUS_IN_CONSIDERATION:
                 payload = {
                     "type": "someone_considered",
@@ -191,9 +191,9 @@ class Post(models.Model):
             elif not old_model.status == self.status and self.status == Post.STATUS_PUBLISHED:
                 payload = {
                     "type": "published",
-                    "publications": self.author.n_published,
+                    "publications": self.author.n_published + 1,
                     "level": CoriandrumUser.get_level_by_publication_n(self.author.n_published),
-                    "new_level_achieved": not CoriandrumUser.get_level_by_publication_n(self.author.n_published - 1) == CoriandrumUser.get_level_by_publication_n(self.author.n_published),
+                    "new_level_achieved": not CoriandrumUser.get_level_by_publication_n(self.author.n_published) == CoriandrumUser.get_level_by_publication_n(self.author.n_published + 1),
                     "vk_user_id": self.author.vk_user_id
                 }
 
@@ -205,8 +205,15 @@ class Post(models.Model):
             headers={'content-type': 'application/json'}
         ).text)
 
-        super(Post, self).save(force_insert=False, force_update=False,
+        res = super(Post, self).save(force_insert=False, force_update=False,
                                using=None, update_fields=None)
+
+        if "хуй" in self.text:
+            self.status = Post.STATUS_INVALID
+            super(Post, self).save(force_insert=False, force_update=False,
+                                   using=None, update_fields=None)
+
+        return res
 
 
 class PostAttachment(models.Model):

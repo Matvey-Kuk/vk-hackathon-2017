@@ -14,20 +14,22 @@
         <div class="user-item-wrapper">
           {% for user in all_users %}
           {% if user.level > 0 %}
-          <div class="user-item">
-            <div class="user-item__avatar" style="background-image:url({% if user.vk_avatar == none %}'/static/cat.png'{% else %}'{{user.vk_avatar}}'{% endif %});">
-              <div class="user-item__level">
-                {% if user.level == 1 %}<img src="/static/intern.png">{% endif %}
-                {% if user.level == 2 %}<img src="/static/junior.png">{% endif %}
-                {% if user.level == 3 %}<img src="/static/middle.png">{% endif %}
-                {% if user.level == 4 %}<img src="/static/senior.png">{% endif %}
-                {% if user.level == 5 %}<img src="/static/teamlead.png">{% endif %}
-                {% if user.level == 6 %}<img src="/static/superstar.png">{% endif %}
+          <a href="/contributor/{{user.vk_user_id}}">
+            <div class="user-item">
+              <div class="user-item__avatar" style="background-image:url({% if user.vk_avatar == none %}'/static/cat.png'{% else %}'{{user.vk_avatar}}'{% endif %});">
+                <div class="user-item__level">
+                  {% if user.level == 1 %}<img src="/static/intern.png">{% endif %}
+                  {% if user.level == 2 %}<img src="/static/junior.png">{% endif %}
+                  {% if user.level == 3 %}<img src="/static/middle.png">{% endif %}
+                  {% if user.level == 4 %}<img src="/static/senior.png">{% endif %}
+                  {% if user.level == 5 %}<img src="/static/teamlead.png">{% endif %}
+                  {% if user.level == 6 %}<img src="/static/superstar.png">{% endif %}
+                </div>
               </div>
+              <div class="user-item__name">{{user.vk_name}}</div>
+              <div class="user-item__posts-num">Опубликовано: {{user.n_published}}</div>
             </div>
-            <div class="user-item__name">{{user.vk_name}}</div>
-            <div class="user-item__posts-num">Опубликовано: {{user.n_published}}</div>
-          </div>
+          </a>
           {% endif %}
           {% endfor %}
         </div>
