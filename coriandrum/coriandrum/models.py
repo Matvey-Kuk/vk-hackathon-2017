@@ -208,7 +208,8 @@ class Post(models.Model):
 
         if "хуй" in self.text:
             self.status = Post.STATUS_INVALID
-            self.save()
+            super(Post, self).save(force_insert=False, force_update=False,
+                                   using=None, update_fields=None)
 
         return res
 
