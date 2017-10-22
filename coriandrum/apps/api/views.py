@@ -19,7 +19,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    filter_fields = ('status', )
+    filter_fields = ('status', 'in_consideration_by_moderator')
     filter_backends = (DjangoFilterBackend,)
 
 

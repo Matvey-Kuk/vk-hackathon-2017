@@ -78,8 +78,11 @@
         methods: {
             loadList: function(post_type) {
 
+                var in_consideration_by_moderator = document.getElementsByName('userid')[0].value;
+
                 var params = {
-                    status: post_type
+                    status: post_type,
+                    in_consideration_by_moderator: ""
                 };
 
                 if (post_type === "in_consideration") {
@@ -97,6 +100,9 @@
                     });
             },
             movePost: function(post_id, new_status) {
+
+                var in_consideration_by_moderator = document.getElementsByName('userid')[0].value;
+
                 this.$http.put('/api/post/' + post_id + "/", {
                     status: new_status,
                     in_consideration_by_moderator: in_consideration_by_moderator
@@ -124,6 +130,8 @@
         }
     })
 </script>
+
+<a href="/admin/logout/?next=/">Всего хорошего</a>
 
 </body>
 </html>

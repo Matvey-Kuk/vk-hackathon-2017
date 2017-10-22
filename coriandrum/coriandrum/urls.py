@@ -18,6 +18,8 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.views.static import serve
 
+admin.site.site_header = 'God mode'
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('apps.api.urls')),
