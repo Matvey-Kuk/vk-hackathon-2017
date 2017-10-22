@@ -26,7 +26,7 @@
           {% if user.level == 6 %}Super Star Агент{% endif %}, количество опубликованных новостей: {{user.n_published}}
         </div>
         {% else %}
-        <div class="title">Спасибо за предложенные новости. Пока ни одна новость не была опубликована.</div>
+        <div class="title">Спасибо за предложенные новости. Пока ни одна ваша новость не была опубликована.</div>
         {% endif %}
         <div class="badge-wrapper">
           <div class="badge{% if user.level >= 1 %} badge_active{% else %} badge_disabled{% endif %}{% if user.level == 1 %} badge_current{% endif %}">
