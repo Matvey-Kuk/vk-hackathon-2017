@@ -111,9 +111,6 @@ body {
 .statusbox__btn {
   float: left;
   margin-right: 30px;
-}
-
-.statusbox__btn a {
   text-decoration: none;
 }
 
