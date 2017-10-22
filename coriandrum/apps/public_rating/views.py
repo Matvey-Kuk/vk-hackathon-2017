@@ -14,7 +14,11 @@ def leaderboard(request):
 def entry(request):
     if request.method == "GET":
         vk_user_id = request.GET.get("viewer_id", "")
-        return HttpResponseRedirect("/contributor/" + vk_user_id)
+        viewer_type = int(request.GET.get("viewer_type", "0"))
+        if viewer_type in [3, 4]:  # user is a community editor/admin
+            return HttpResponseRedirect("/god/")
+        else: # user is not a member/is a regular member/is a moderator
+            return HttpResponseRedirect("/contributor/" + vk_user_id)
 
 def contributor(request, user_id):
     if request.method == "GET":
