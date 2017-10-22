@@ -140,6 +140,12 @@ class Post(models.Model):
     author = models.ForeignKey(CoriandrumUser, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
 
+    @property
+    def image(self):
+        print(self.raw_vk_attachments_payload)
+        return 123
+        # return json.loads(self.raw_vk_attachments_payload)
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         payload = {}
