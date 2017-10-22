@@ -20,10 +20,12 @@ class CoriandrumUserSerializer(serializers.HyperlinkedModelSerializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     author = serializers.PrimaryKeyRelatedField(read_only=False, queryset=CoriandrumUser.objects.all(), required=False)
+    in_consideration_by_moderator = serializers.PrimaryKeyRelatedField(read_only=False, queryset=CoriandrumUser.objects.all(), required=False)
 
     class Meta:
         model = Post
-        fields = ('id', 'author', 'text', 'status', 'raw_vk_attachments_payload')
+        fields = ('id', 'author', 'text', 'status',
+                  'raw_vk_attachments_payload', 'in_consideration_by_moderator')
 
 
 class PostAttachmentSerializer(serializers.HyperlinkedModelSerializer):

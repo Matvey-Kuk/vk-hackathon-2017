@@ -16,7 +16,7 @@ def contributor(request, user_id):
     if request.method == "GET":
         user_qs = CoriandrumUser.objects.filter(vk_user_id=user_id)
         if not user_qs:
-            return HttpResponse("404", status=404)
+            return render(request, "public_rating/newcomer.html")
         user = user_qs[0]
         context = {
             "user": user,

@@ -8,8 +8,7 @@
     <script type="text/javascript" src="/static/script.js"></script>
   </head>
   <body>
-    <div class="container{% if user.level == 0 %} container_transparent{% endif %}">
-      {% if user.level > 0 %}
+    <div class="container">
       <div class="user">
         <div class="title">Агент Лентача</div>
         <div class="avatar" style="background-image: url('{{user.vk_avatar}}');"></div>
@@ -95,22 +94,6 @@
           Emoji icons provided free by <a href="https://www.emojione.com" target="_blank">EmojiOne</a>
         </div>
       </div>
-      {% else %}
-      <div class="first-screen">
-        <div class="logo-wrapper">
-          <img class="logo" src="/static/logo.png">
-          <div class="logo-text">АГЕНТ</div>
-        </div>
-        <div class="text">
-          ★  Стань агентом Лентача: предлагай новости, получай специальный статус и вознаграждение!
-          <br><br>
-          ▶  Как начать? Напишите сообщение сообществу. Там наш дружелюбный бот вам все объяснит.
-        </div>
-        <div class="leaderboard-btn">
-          Посмотреть на лидерборд агентов
-        </div>
-      </div>
-      {% endif %}
     </div>
   </body>
 </html>
