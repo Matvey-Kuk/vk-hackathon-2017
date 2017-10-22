@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import TemplateView
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 
 from coriandrum.models import CoriandrumUser, Achievement, Post
 
@@ -32,3 +35,7 @@ def contributor(request, user_id, is_admin=False):
             "user": user,
         }
         return render(request, "public_rating/contributor.html", context)
+
+
+class IndexView(TemplateView):
+    template_name = 'public_rating/newcomer.html'
