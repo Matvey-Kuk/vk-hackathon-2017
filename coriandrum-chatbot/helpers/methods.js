@@ -103,5 +103,6 @@ var handleNewMessage = function (object) {
 };
 
 module.exports = {
-  handleNewMessage: handleNewMessage
+  handleNewMessage: handleNewMessage,
+  replyToChat: replyToChat
 };

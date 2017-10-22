@@ -23,7 +23,14 @@ app.post('/', function (request, response) {
 });
 
 app.post('/update', function (request, response) {
-  console.log(request, response);
+  console.log(request.body);
+  var body = request.body;
+  if (body.type === 'new_post') {
+    methods.replyToChat('new post send', body.vk_user_id, function () {
+      console.log('success');
+    });
+  }
+  response.send('ok');
 });
 
 app.listen(app.get('port'), function () {
