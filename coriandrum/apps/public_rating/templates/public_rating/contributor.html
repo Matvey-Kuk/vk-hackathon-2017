@@ -89,6 +89,19 @@
             Поделиться статусом с друзьями
           </div>
         </a>
+        <a href="/leaderboard">
+          <div class="statusbox__share-btn">
+            Просмотреть лидерборд
+          </div>
+        </a>
+        {% if '/admin' in request.path %}
+        <a href="/god/">
+          <div class="statusbox__share-btn">
+            Перейти в интерфейс администратора
+          </div>
+        </a>
+        {% endif %}
+      </div>
       </div>
       <div class="footer">
         <div class="attribution">
