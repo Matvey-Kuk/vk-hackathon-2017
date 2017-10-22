@@ -12,34 +12,34 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.json());
 
-app.post('/update', function (request, response) {
-  console.log(request.body);
-  var body = request.body;
-  var reply;
+// app.post('/update', function (request, response) {
+//   console.log(request.body);
+//   var body = request.body;
+//   var reply;
 
-  if (body.type === 'someone_considered') {
-    reply = texts.onConsider();
-  } else if (body.type === 'invalid') {
-    reply = texts.onValidationFail();
-  } else if (body.type === 'trashed') {
-    reply = texts.onTrashFail();
-  } else if (body.type === 'almost_published') {
-    reply = texts.onAlmostPublished();
-  } else if (body.type === 'published') {
-    if (body.new_level_achieved) {
-      reply = texts.onPublishAndAchieve(body.publications);
-    } else {
-      reply = texts.onPublish(body.publications);
-    }
-  }
+//   if (body.type === 'someone_considered') {
+//     reply = texts.onConsider();
+//   } else if (body.type === 'invalid') {
+//     reply = texts.onValidationFail();
+//   } else if (body.type === 'trashed') {
+//     reply = texts.onTrashFail();
+//   } else if (body.type === 'almost_published') {
+//     reply = texts.onAlmostPublished();
+//   } else if (body.type === 'published') {
+//     if (body.new_level_achieved) {
+//       reply = texts.onPublishAndAchieve(body.publications);
+//     } else {
+//       reply = texts.onPublish(body.publications);
+//     }
+//   }
 
-  if (reply) {
-    methods.replyToChat(reply, body.vk_user_id, function () {
-      console.log('success');
-    });
-  }
-  response.send('ok');
-});
+//   if (reply) {
+//     methods.replyToChat(reply, body.vk_user_id, function () {
+//       console.log('success');
+//     });
+//   }
+//   response.send('ok');
+// });
 
 
 app.post('/', function (request, response) {
