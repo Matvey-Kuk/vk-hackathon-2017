@@ -151,6 +151,8 @@ class Post(models.Model):
                     if inst['type'] == "photo":
                         if "photo_1280" in inst['photo']:
                             ims.append(inst['photo']['photo_1280'])
+                        elif "photo_130" in inst['photo']:
+                            ims.append(inst['photo']['photo_130'])
         except TypeError:
             pass
 

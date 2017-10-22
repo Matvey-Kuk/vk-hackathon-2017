@@ -51,6 +51,9 @@
         </div>
         <div class="list-item__text">
           Текст новости: {{ post.text }} <br>
+                        <div v-for="ims in post.images">
+                <img style="width:250px;" v-bind:src="ims">
+            </div>
         </div>
         <button v-on:click="movePost(post.id, 'new')">Обратно в новые</button>
         <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
@@ -66,6 +69,9 @@
         </div>
         <div class="list-item__text">
           Текст новости: {{ post.text }} <br>
+                        <div v-for="ims in post.images">
+                <img style="width:250px;" v-bind:src="ims">
+            </div>
         </div>
         <button v-on:click="movePost(post.id, 'in_consideration')">На осознание</button>
         <button v-on:click="movePost(post.id, 'trash')">Испепелить</button>
