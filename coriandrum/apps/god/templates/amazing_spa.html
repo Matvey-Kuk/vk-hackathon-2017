@@ -17,8 +17,15 @@
 {% verbatim %}
 
 <div id="app" class="container">
-  <div class="new-posts">
-    <div class="title">Новые (Общая куча):</div>
+  <div class="title">
+    Предложения от агентов
+  </div>
+  <div class="tab-wrapper">
+    <div href="#posts_new" class="tab tab_active">Новые (Общая куча):</div>
+    <div href="#posts_in-work" class="tab">На осознании:</div>
+    <div href="#posts_approved" class="tab">Готовы к публикации:</div>
+  </div>
+  <div class="posts posts_new posts_visible" id="posts_new">
     <div class="list-wrapper">
       <div class="list-item" v-for="post in posts['new']">
         <div class="list-item__author">
@@ -33,8 +40,7 @@
       </div>
     </div>
   </div>
-  <div class="in-work-posts">
-    <div class="title">На осознании (Ваша личная куча):</div>
+  <div class="posts posts_in-work posts_hidden" id="posts_in-work">
     <div class="list-wrapper">
       <div class="list-item" v-for="post in posts['in_consideration']">
         <div class="list-item__author">
@@ -49,8 +55,7 @@
       </div>
     </div>
   </div>
-  <div class="approved-posts">
-    <div class="title">Готовы к публикации (Общая куча):</div>
+  <div class="posts posts_approved posts_hidden" id="posts_approved">
     <div class="list-wrapper">
       <div class="list-item" v-for="post in posts['looks_interesting']">
         <div class="list-item__author">
@@ -68,6 +73,43 @@
 </div>
 
 <script>
+    window.addEventListener("load", function() {
+
+    	// store tabs variable
+    	var myTabs = document.querySelectorAll(".tab");
+
+    	function myTabClicks(tabClickEvent) {
+        console.log("click");
+
+    		for (var i = 0; i < myTabs.length; i++) {
+    			myTabs[i].classList.remove("tab_active");
+    		}
+
+    		var clickedTab = tabClickEvent.currentTarget;
+
+    		clickedTab.classList.add("tab_active");
+
+    		tabClickEvent.preventDefault();
+
+    		var myContentPanes = document.querySelectorAll(".posts");
+
+    		for (i = 0; i < myContentPanes.length; i++) {
+    			myContentPanes[i].classList.remove("posts_visible");
+          myContentPanes[i].classList.add("posts_hidden");
+    		}
+
+        var anchorReference = tabClickEvent.target;
+    		var activePaneId = anchorReference.getAttribute("href");
+    		var activePane = document.querySelector(activePaneId);
+
+    		activePane.classList.add("posts_visible");
+        activePane.classList.remove("posts_hidden");
+    	}
+
+    	for (i = 0; i < myTabs.length; i++) {
+    		myTabs[i].addEventListener("click", myTabClicks)
+    	}
+    });
 
     Vue.http.interceptors.push(function(request, next) {
         request.headers.set('Content-Type', 'application/json ');
@@ -109,10 +151,6 @@
                     });
             },
             movePost: function(post_id, new_status) {
-<<<<<<< HEAD
-=======
-
->>>>>>> b66c60dff7fa0948b9e2d403fb52fed310a1b9b6
                 this.$http.put('/api/post/' + post_id + "/", {
                     status: new_status,
                     in_consideration_by_moderator: document.getElementsByName('userid')[0].value

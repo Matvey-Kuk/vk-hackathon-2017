@@ -13,6 +13,9 @@ body {
   padding: 40px;
   max-width: 640px;
   margin: 0 auto;
+  height: 500px;
+  max-height: 500px;
+  overflow: scroll;
 }
 
 .container_transparent {
@@ -227,10 +230,52 @@ body {
 }
 
 /* admin panel */
+#app .title {
+  font-size: 18px;
+}
+
 .list-item {
   background: #efefef;
   padding: 10px;
   border-radius: 2px;
+  margin-bottom: 5px;
+}
+
+.list-item__text, .list-item__author {
+  font-size: 14px;
+}
+
+.list-item__text {
+  margin-bottom: 5px;
+}
+
+.tab-wrapper {
+  margin-bottom: 10px;
+}
+
+.tab {
+  padding: 10px 15px;
+  background: #efdfe8;
+  color: #333;
+  border-radius: 2px;
+  display: inline-table;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab_active {
+  background-color: #823560;
+  color: #fff;
+}
+
+.posts {
+  transition: opacity 0.2s linear;
+}
+
+.posts_hidden {
+  opacity: 0;
+  height: 0px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 640px) {
