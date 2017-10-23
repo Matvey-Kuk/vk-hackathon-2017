@@ -1,13 +1,9 @@
-Heroku: `git subtree push --prefix coriandrum-chatbot heroku master`
+Этот репозиторий содержит код проекта "Агент Лентача", подготовленного командой Coriandrum Sativum на [Хакатоне Вконтакте 2017](https://vk.com/vkhackathon), прошедшем в Санкт-Петербурге 20-22 октября.
 
-Deploy: 
-```
-docker build -t motakukk/vk-hack-2017:latest .
-docker push motakukk/vk-hack-2017:latest
-```
+Команда:
+- https://vk.com/shutupandskate (Юля) - создание вежливого бота, фронтенд
+- https://vk.com/id9551443 (Николай) - бекенд, фронтенд
+- https://vk.com/maryhaak (Мария) - дизайн, фронтенд
+- https://vk.com/motakuk (Матвей) - бекенд, фронтенд
 
-On server:
-
-```
-docker service update --image motakukk/vk-hack-2017:5 bck
-```
+Презентация:
