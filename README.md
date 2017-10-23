@@ -6,4 +6,4 @@
 - https://vk.com/maryhaak (Мария) - дизайн, фронтенд
 - https://vk.com/motakuk (Матвей) - бекенд, фронтенд
 
-Презентация:
+[Презентация](https://github.com/Matvey-Kuk/vk-hackathon-2017/blob/master/57_CoriandrumSativum.pdf)
